@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========================================
+   全局基础样式 — 北京华晟智造科技
+   ======================================== */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-brand-black text-white font-sans antialiased;
+    min-height: 100dvh;
+  }
+
+  ::selection {
+    @apply bg-brand-blue/30 text-white;
+  }
+}
+
+@layer components {
+  /* 触控友好的按钮基础（≥48px） */
+  .btn-touch {
+    @apply inline-flex items-center justify-center
+           min-h-touch px-6 py-3
+           text-sm font-semibold
+           rounded-lg
+           transition-all duration-200
+           focus:outline-none focus:ring-2 focus:ring-offset-2
+           active:scale-95;
+  }
+
+  .btn-primary {
+    @apply btn-touch
+           bg-brand-orange text-white
+           hover:bg-orange-600
+           focus:ring-brand-orange
+           shadow-lg shadow-brand-orange/25;
+  }
+
+  .btn-secondary {
+    @apply btn-touch
+           bg-white/10 text-white
+           hover:bg-white/20
+           focus:ring-white/50
+           backdrop-blur-sm;
+  }
+
+  /* 导航链接 */
+  .nav-link {
+    @apply text-brand-muted hover:text-white
+           transition-colors duration-200
+           text-sm font-medium;
+  }
+
+  /* Hero 轮播幻灯片 */
+  .hero-slide {
+    @apply absolute inset-0 flex items-center justify-center;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+  }
+
+  .hero-slide.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* 轮播指示器 */
+  .hero-dot.active {
+    @apply bg-brand-blue;
+    width: 1.75rem;
+    border-radius: 9999px;
+  }
+}
+
+@layer utilities {
+  .overlay-gradient {
+    background: linear-gradient(
+      to bottom,
+      rgba(13, 17, 23, 0.3) 0%,
+      rgba(13, 17, 23, 0.7) 70%,
+      rgba(13, 17, 23, 0.95) 100%
+    );
+  }
+}

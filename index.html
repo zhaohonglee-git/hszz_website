@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="北京华晟智造科技有限公司 — 工业机器人维修保养、编程调试、系统集成、备品备件销售、二手机翻新及销售" />
+  <title>北京华晟智造科技有限公司 — 工业机器人后服务专家</title>
+
+  <!-- Google Fonts: Noto Sans SC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body class="bg-brand-black text-white font-sans antialiased">
+
+  <!-- ================================================================ -->
+  <!--  Header — 固定导航栏                                                -->
+  <!-- ================================================================ -->
+  <header
+    id="header"
+    class="fixed top-0 left-0 right-0 z-50 bg-brand-black/80 backdrop-blur-md transition-shadow duration-300"
+  >
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 md:h-20">
+
+        <!-- Logo + 公司名 -->
+        <a href="#hero" class="flex items-center gap-2.5 group" aria-label="回到首页">
+          <!-- 工业风格 Logo 图标（六边形齿轮） -->
+          <svg
+            class="w-8 h-8 text-brand-blue transition-colors duration-200 group-hover:text-brand-orange"
+            viewBox="0 0 32 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M16 2L28 8V24L16 30L4 24V8L16 2Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linejoin="round"
+            />
+            <circle cx="16" cy="16" r="6" stroke="currentColor" stroke-width="2" />
+            <circle cx="16" cy="16" r="2.5" fill="currentColor" />
+            <path d="M16 4V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            <path d="M16 23V28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            <path d="M4 16H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            <path d="M23 16H28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+          <span class="text-lg font-bold tracking-wide text-white">华晟智造</span>
+        </a>
+
+        <!-- Desktop 导航链接 -->
+        <nav class="hidden md:flex items-center gap-8" aria-label="主导航">
+          <a href="#hero"       class="nav-link nav-link-active">首页</a>
+          <a href="#services"   class="nav-link">业务范围</a>
+          <a href="#diagnostic" class="nav-link">在线诊断</a>
+          <a href="#cases"      class="nav-link">典型案例</a>
+          <a href="#knowledge"  class="nav-link">知识库</a>
+          <a href="#contact"    class="nav-link">联系我们</a>
+        </nav>
+
+        <!-- Desktop CTA 小按钮 -->
+        <a
+          href="#diagnostic"
+          class="hidden md:inline-flex btn-primary !min-h-0 !py-2 !px-4 !text-xs"
+        >
+          快速诊断
+        </a>
+
+        <!-- Mobile 汉堡菜单按钮（≥48px 触控区域） -->
+        <button
+          id="menu-btn"
+          class="md:hidden flex items-center justify-center w-12 h-12 rounded-lg
+                 text-brand-muted hover:text-white transition-colors duration-200
+                 focus:outline-none focus:ring-2 focus:ring-brand-blue"
+          aria-label="切换菜单"
+          aria-expanded="false"
+        >
+          <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="close-icon" class="hidden w-6 h-6" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile 全屏导航覆盖层 -->
+    <nav
+      id="mobile-nav"
+      class="hidden md:hidden fixed inset-0 top-16 z-40 bg-brand-black/95 backdrop-blur-lg"
+      aria-label="移动端导航"
+    >
+      <div class="flex flex-col items-center justify-center h-full gap-8 -mt-16">
+        <a href="#hero"       class="text-2xl font-semibold text-white hover:text-brand-blue transition-colors">首页</a>
+        <a href="#services"   class="text-2xl font-semibold text-white hover:text-brand-blue transition-colors">业务范围</a>
+        <a href="#diagnostic" class="text-2xl font-semibold text-white hover:text-brand-blue transition-colors">在线诊断</a>
+        <a href="#cases"      class="text-2xl font-semibold text-white hover:text-brand-blue transition-colors">典型案例</a>
+        <a href="#knowledge"  class="text-2xl font-semibold text-white hover:text-brand-blue transition-colors">知识库</a>
+        <a href="#contact"    class="text-2xl font-semibold text-white hover:text-brand-blue transition-colors">联系我们</a>
+        <a href="#diagnostic" class="btn-primary mt-4 !text-base">在线快速诊断</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ================================================================ -->
+  <!--  Hero Section — 三页轮播主视觉区                                     -->
+  <!-- ================================================================ -->
+  <section
+    id="hero"
+    class="relative min-h-screen overflow-hidden pt-16"
+  >
+    <!-- ==================== 轮播幻灯片容器 ==================== -->
+    <div id="hero-slides" class="absolute inset-0">
+
+      <!-- Slide 1：核心业务 Slogan -->
+      <div class="hero-slide active" data-slide="0">
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+             style="background-image: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1920&q=80');"></div>
+        <div class="absolute inset-0 overlay-gradient"></div>
+        <div class="relative z-10 flex items-center justify-center h-full">
+          <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+            <div class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full
+                        bg-brand-blue text-white shadow-lg shadow-brand-blue/30
+                        text-sm sm:text-base font-semibold mb-6">
+              <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+              工业机器人后服务专家
+            </div>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl
+                       font-black leading-tight tracking-tight text-white"
+                style="text-shadow: 0 2px 24px rgba(0,0,0,0.7);">
+              让每一台工业机器人<br class="md:hidden" />
+              <span class="text-brand-blue">高效</span>、
+              <span class="text-brand-blue">精准</span>、
+              <span class="text-brand-blue">持续</span>运转
+            </h1>
+            <p class="mt-6 max-w-2xl mx-auto text-base sm:text-lg text-gray-300"
+               style="text-shadow: 0 1px 8px rgba(0,0,0,0.6);">
+              覆盖工业机器人全生命周期 — 从紧急维修到预防保养，<br class="hidden sm:block" />
+              从编程调试到系统集成，华晟智造是您最可靠的运维伙伴。
+            </p>
+            <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a href="#diagnostic" class="btn-primary !text-base !px-8 w-full sm:w-auto">
+                <svg class="w-5 h-5 mr-2 -ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 2L3 14h8l-2 8 10-12h-8l2-8z" />
+                </svg>
+                在线快速诊断
+              </a>
+              <a href="#services" class="btn-secondary w-full sm:w-auto">
+                了解业务范围
+                <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2：埃斯顿官方授权背书 -->
+      <div class="hero-slide" data-slide="1">
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+             style="background-image: url('https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=1920&q=80');"></div>
+        <div class="absolute inset-0 overlay-gradient"></div>
+        <div class="relative z-10 flex items-center justify-center h-full">
+          <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+            <div class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full
+                        bg-brand-orange text-white shadow-lg shadow-brand-orange/30
+                        text-sm sm:text-base font-semibold mb-6">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+              官方授权 · 北方七省区
+            </div>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl
+                       font-black leading-tight tracking-tight text-white"
+                style="text-shadow: 0 2px 24px rgba(0,0,0,0.7);">
+              南京埃斯顿自动化<br class="sm:hidden" />
+              <span class="text-brand-orange">官方授权</span>后服务合作伙伴
+            </h2>
+            <p class="mt-5 max-w-2xl mx-auto text-sm sm:text-base text-gray-300"
+               style="text-shadow: 0 1px 8px rgba(0,0,0,0.6);">
+              北京华晟智造是南京埃斯顿自动化股份有限公司（ESTUN）<br class="hidden sm:block" />
+              在北方七省区的官方授权后服务合作伙伴，具备原厂级服务能力与官方背书。
+            </p>
+
+            <!-- 七省区标签 -->
+            <div class="mt-6 flex flex-wrap items-center justify-center gap-2">
+              <span class="px-3 py-1.5 rounded-lg bg-white/10 text-white text-xs sm:text-sm font-medium backdrop-blur-sm border border-white/10">河南省</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/10 text-white text-xs sm:text-sm font-medium backdrop-blur-sm border border-white/10">河北省</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/10 text-white text-xs sm:text-sm font-medium backdrop-blur-sm border border-white/10">山东省</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/10 text-white text-xs sm:text-sm font-medium backdrop-blur-sm border border-white/10">山西省</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/10 text-white text-xs sm:text-sm font-medium backdrop-blur-sm border border-white/10">北京市</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/10 text-white text-xs sm:text-sm font-medium backdrop-blur-sm border border-white/10">天津市</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/10 text-white text-xs sm:text-sm font-medium backdrop-blur-sm border border-white/10">陕西省</span>
+            </div>
+
+            <!-- 三大服务网点 -->
+            <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
+              <div class="flex items-center gap-2 text-sm text-white">
+                <svg class="w-4 h-4 text-brand-orange shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <span><strong class="text-brand-orange">北京</strong> · 亦庄总部</span>
+              </div>
+              <span class="hidden sm:inline text-white/20">|</span>
+              <div class="flex items-center gap-2 text-sm text-white">
+                <svg class="w-4 h-4 text-brand-orange shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <span><strong class="text-brand-orange">济南</strong> · 埃斯顿联保网点</span>
+              </div>
+              <span class="hidden sm:inline text-white/20">|</span>
+              <div class="flex items-center gap-2 text-sm text-white">
+                <svg class="w-4 h-4 text-brand-orange shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <span><strong class="text-brand-orange">郑州</strong> · 埃斯顿联保网点</span>
+              </div>
+            </div>
+
+            <div class="mt-10">
+              <a href="#contact" class="btn-primary !text-base !px-8">
+                预约官方服务
+                <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3：技术团队实力 -->
+      <div class="hero-slide" data-slide="2">
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+             style="background-image: url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1920&q=80');"></div>
+        <div class="absolute inset-0 overlay-gradient"></div>
+        <div class="relative z-10 flex items-center justify-center h-full">
+          <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+            <div class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full
+                        bg-brand-blue text-white shadow-lg shadow-brand-blue/30
+                        text-sm sm:text-base font-semibold mb-6">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              技术实力
+            </div>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl
+                       font-black leading-tight tracking-tight text-white"
+                style="text-shadow: 0 2px 24px rgba(0,0,0,0.7);">
+              专业团队<span class="text-brand-blue"> · </span>资质保障<br class="sm:hidden" />
+              <span class="text-brand-blue">就近响应</span>
+            </h2>
+            <p class="mt-5 max-w-2xl mx-auto text-sm sm:text-base text-gray-300"
+               style="text-shadow: 0 1px 8px rgba(0,0,0,0.6);">
+              核心团队持有 KUKA / ABB / FANUC / 埃斯顿等品牌官方技术认证，<br class="hidden sm:block" />
+              平均从业经验 8 年以上，可快速定位并解决各类工业机器人故障。
+            </p>
+
+            <!-- 数据亮点 -->
+            <div class="mt-8 grid grid-cols-3 gap-3 sm:gap-6 max-w-xl mx-auto">
+              <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-4 sm:p-5 border border-white/10">
+                <div class="text-2xl sm:text-3xl font-black text-brand-blue">30<span class="text-lg">+</span></div>
+                <div class="text-xs sm:text-sm text-gray-300 mt-1">技术服务工程师</div>
+              </div>
+              <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-4 sm:p-5 border border-white/10">
+                <div class="text-2xl sm:text-3xl font-black text-brand-blue">15<span class="text-lg">+</span></div>
+                <div class="text-xs sm:text-sm text-gray-300 mt-1">年行业服务经验</div>
+              </div>
+              <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-4 sm:p-5 border border-white/10">
+                <div class="text-2xl sm:text-3xl font-black text-brand-orange">100<span class="text-lg">%</span></div>
+                <div class="text-xs sm:text-sm text-gray-300 mt-1">官方持证上岗</div>
+              </div>
+            </div>
+
+            <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a href="#diagnostic" class="btn-primary !text-base !px-8 w-full sm:w-auto">
+                提交诊断请求
+              </a>
+              <a href="#contact" class="btn-secondary w-full sm:w-auto">
+                了解团队详情
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 共享：科技网格纹理 -->
+    <div class="absolute inset-0 opacity-[0.03] pointer-events-none z-10"
+         style="background-image:
+           linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px),
+           linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px);
+           background-size: 60px 60px;"></div>
+
+    <!-- 轮播指示器圆点 -->
+    <div id="hero-dots" class="absolute bottom-24 sm:bottom-28 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
+      <button class="hero-dot w-3 h-3 rounded-full bg-white transition-all duration-300" data-index="0" aria-label="第1页"></button>
+      <button class="hero-dot w-3 h-3 rounded-full bg-white/40 hover:bg-white/70 transition-all duration-300" data-index="1" aria-label="第2页"></button>
+      <button class="hero-dot w-3 h-3 rounded-full bg-white/40 hover:bg-white/70 transition-all duration-300" data-index="2" aria-label="第3页"></button>
+    </div>
+
+    <!-- 左右切换箭头（桌面端可见） -->
+    <button id="hero-prev" class="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 z-20
+                                   w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm
+                                   items-center justify-center text-white transition-all duration-200
+                                   border border-white/10 hover:border-white/30"
+            aria-label="上一页">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+      </svg>
+    </button>
+    <button id="hero-next" class="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 z-20
+                                   w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm
+                                   items-center justify-center text-white transition-all duration-200
+                                   border border-white/10 hover:border-white/30"
+            aria-label="下一页">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+      </svg>
+    </button>
+
+    <!-- 底部滚动提示 -->
+    <div class="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 text-center">
+      <span class="text-xs text-brand-muted tracking-widest uppercase">向下滚动探索</span>
+      <div class="mt-1.5 mx-auto w-5 h-8 rounded-full border border-brand-muted/40 flex justify-center">
+        <span class="block w-1 h-2 rounded-full bg-brand-blue mt-1.5 animate-bounce"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  Services — 业务范围                                               -->
+  <!-- ================================================================ -->
+  <section id="services" class="relative py-20 sm:py-28 bg-brand-dark">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+      <!-- Section Header -->
+      <div class="text-center mb-14 sm:mb-18" data-animate>
+        <span class="text-brand-blue text-xs sm:text-sm font-semibold tracking-widest uppercase">
+          What We Do
+        </span>
+        <h2 class="mt-3 text-2xl sm:text-3xl lg:text-4xl font-black text-white">
+          核心业务范围
+        </h2>
+        <p class="mt-4 max-w-xl mx-auto text-sm sm:text-base text-brand-muted">
+          覆盖工业机器人全生命周期，六大业务板块一站式满足您的运维需求
+        </p>
+      </div>
+
+      <!-- 业务卡片 Grid：mobile 1 列 → md 2 列 → lg 3 列 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+
+        <!-- 1. 维修保养 -->
+        <article
+          class="group relative bg-brand-black/60 rounded-2xl overflow-hidden
+                 border border-white/5 hover:border-brand-blue/30
+                 transition-all duration-300 hover:-translate-y-1
+                 hover:shadow-xl hover:shadow-brand-blue/5"
+          data-animate
+        >
+          <!-- 头图 -->
+          <div class="relative h-44 sm:h-48 overflow-hidden">
+            <div
+              class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+              style="background-image: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop&q=80');"
+            ></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-black/95 via-brand-black/40 to-brand-black/10"></div>
+            <!-- 图标徽章 -->
+            <div class="absolute bottom-4 left-4 w-10 h-10 rounded-lg bg-brand-blue/90 backdrop-blur-sm flex items-center justify-center shadow-lg">
+              <i data-lucide="wrench" class="w-5 h-5 text-white"></i>
+            </div>
+          </div>
+          <!-- 正文 -->
+          <div class="p-5 sm:p-6">
+            <h3 class="text-lg font-bold text-white mb-2.5 group-hover:text-brand-blue transition-colors">维修保养</h3>
+            <p class="text-sm text-brand-muted leading-relaxed">
+              快速响应、原厂级维修标准，涵盖机械臂、控制柜、示教器全系维护，
+              支持 KUKA / ABB / FANUC / 安川等主流品牌。
+            </p>
+          </div>
+        </article>
+
+        <!-- 2. 编程调试 -->
+        <article
+          class="group relative bg-brand-black/60 rounded-2xl overflow-hidden
+                 border border-white/5 hover:border-brand-blue/30
+                 transition-all duration-300 hover:-translate-y-1
+                 hover:shadow-xl hover:shadow-brand-blue/5"
+          data-animate
+        >
+          <div class="relative h-44 sm:h-48 overflow-hidden">
+            <div
+              class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+              style="background-image: url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=600&h=400&fit=crop&q=80');"
+            ></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-black/95 via-brand-black/40 to-brand-black/10"></div>
+            <div class="absolute bottom-4 left-4 w-10 h-10 rounded-lg bg-brand-blue/90 backdrop-blur-sm flex items-center justify-center shadow-lg">
+              <i data-lucide="terminal" class="w-5 h-5 text-white"></i>
+            </div>
+          </div>
+          <div class="p-5 sm:p-6">
+            <h3 class="text-lg font-bold text-white mb-2.5 group-hover:text-brand-blue transition-colors">编程调试</h3>
+            <p class="text-sm text-brand-muted leading-relaxed">
+              多品牌机器人编程调试服务，涵盖新线体搭建、节拍优化、
+              轨迹规划与工艺参数整定，帮助产线快速爬坡达产。
+            </p>
+          </div>
+        </article>
+
+        <!-- 3. 系统集成 -->
+        <article
+          class="group relative bg-brand-black/60 rounded-2xl overflow-hidden
+                 border border-white/5 hover:border-brand-blue/30
+                 transition-all duration-300 hover:-translate-y-1
+                 hover:shadow-xl hover:shadow-brand-blue/5"
+          data-animate
+        >
+          <div class="relative h-44 sm:h-48 overflow-hidden">
+            <div
+              class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+              style="background-image: url('https://images.unsplash.com/photo-1563770660941-20978e870e26?w=600&h=400&fit=crop&q=80');"
+            ></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-black/95 via-brand-black/40 to-brand-black/10"></div>
+            <div class="absolute bottom-4 left-4 w-10 h-10 rounded-lg bg-brand-blue/90 backdrop-blur-sm flex items-center justify-center shadow-lg">
+              <i data-lucide="puzzle" class="w-5 h-5 text-white"></i>
+            </div>
+          </div>
+          <div class="p-5 sm:p-6">
+            <h3 class="text-lg font-bold text-white mb-2.5 group-hover:text-brand-blue transition-colors">系统集成</h3>
+            <p class="text-sm text-brand-muted leading-relaxed">
+              机器人工作站设计、视觉系统对接、PLC 联动与周边设备集成，
+              提供从方案设计到现场交付的交钥匙工程。
+            </p>
+          </div>
+        </article>
+
+        <!-- 4. 备品备件 -->
+        <article
+          class="group relative bg-brand-black/60 rounded-2xl overflow-hidden
+                 border border-white/5 hover:border-brand-blue/30
+                 transition-all duration-300 hover:-translate-y-1
+                 hover:shadow-xl hover:shadow-brand-blue/5"
+          data-animate
+        >
+          <div class="relative h-44 sm:h-48 overflow-hidden">
+            <div
+              class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+              style="background-image: url('https://images.unsplash.com/photo-1513828583688-c52646db42da?w=600&h=400&fit=crop&q=80');"
+            ></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-black/95 via-brand-black/40 to-brand-black/10"></div>
+            <div class="absolute bottom-4 left-4 w-10 h-10 rounded-lg bg-brand-blue/90 backdrop-blur-sm flex items-center justify-center shadow-lg">
+              <i data-lucide="package" class="w-5 h-5 text-white"></i>
+            </div>
+          </div>
+          <div class="p-5 sm:p-6">
+            <h3 class="text-lg font-bold text-white mb-2.5 group-hover:text-brand-blue transition-colors">备品备件</h3>
+            <p class="text-sm text-brand-muted leading-relaxed">
+              各品牌原厂及替代备件供应，电机、减速机、线缆、IO 模块等快速交付，
+              支持紧急订单 48 小时发货。
+            </p>
+          </div>
+        </article>
+
+        <!-- 5. 二手机翻新 -->
+        <article
+          class="group relative bg-brand-black/60 rounded-2xl overflow-hidden
+                 border border-white/5 hover:border-brand-blue/30
+                 transition-all duration-300 hover:-translate-y-1
+                 hover:shadow-xl hover:shadow-brand-blue/5"
+          data-animate
+        >
+          <div class="relative h-44 sm:h-48 overflow-hidden">
+            <div
+              class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+              style="background-image: url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=600&h=400&fit=crop&q=80');"
+            ></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-black/95 via-brand-black/40 to-brand-black/10"></div>
+            <div class="absolute bottom-4 left-4 w-10 h-10 rounded-lg bg-brand-orange/90 backdrop-blur-sm flex items-center justify-center shadow-lg">
+              <i data-lucide="refresh-cw" class="w-5 h-5 text-white"></i>
+            </div>
+          </div>
+          <div class="p-5 sm:p-6">
+            <h3 class="text-lg font-bold text-white mb-2.5 group-hover:text-brand-blue transition-colors">二手机翻新</h3>
+            <p class="text-sm text-brand-muted leading-relaxed">
+              整机拆解清洗、关键部件更换、精度校准与 72 小时老化测试，
+              翻新后性能恢复至出厂标准，附带质保承诺。
+            </p>
+          </div>
+        </article>
+
+        <!-- 6. 二手机销售 -->
+        <article
+          class="group relative bg-brand-black/60 rounded-2xl overflow-hidden
+                 border border-white/5 hover:border-brand-blue/30
+                 transition-all duration-300 hover:-translate-y-1
+                 hover:shadow-xl hover:shadow-brand-blue/5"
+          data-animate
+        >
+          <div class="relative h-44 sm:h-48 overflow-hidden">
+            <div
+              class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+              style="background-image: url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=400&fit=crop&q=80');"
+            ></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-black/95 via-brand-black/40 to-brand-black/10"></div>
+            <div class="absolute bottom-4 left-4 w-10 h-10 rounded-lg bg-brand-blue/90 backdrop-blur-sm flex items-center justify-center shadow-lg">
+              <i data-lucide="store" class="w-5 h-5 text-white"></i>
+            </div>
+          </div>
+          <div class="p-5 sm:p-6">
+            <h3 class="text-lg font-bold text-white mb-2.5 group-hover:text-brand-blue transition-colors">二手机销售</h3>
+            <p class="text-sm text-brand-muted leading-relaxed">
+              翻新工业机器人整机销售，提供设备选型咨询、现场安装调试服务，
+              高性价比替代方案，降低产线投资门槛。
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  Cases — 典型案例（JS 动态渲染）                                     -->
+  <!-- ================================================================ -->
+  <section id="cases" class="relative py-20 sm:py-28 bg-brand-black">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+      <!-- Section Header -->
+      <div class="text-center mb-14 sm:mb-18" data-animate>
+        <span class="text-brand-blue text-xs sm:text-sm font-semibold tracking-widest uppercase">
+          Case Studies
+        </span>
+        <h2 class="mt-3 text-2xl sm:text-3xl lg:text-4xl font-black text-white">
+          典型案例
+        </h2>
+        <p class="mt-4 max-w-xl mx-auto text-sm sm:text-base text-brand-muted">
+          从汽车制造到新能源，我们用专业能力赢得客户信任
+        </p>
+      </div>
+
+      <!-- 案例卡片 Grid：由 JS 动态注入 -->
+      <div
+        id="cases-grid"
+        class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8"
+      ></div>
+
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  Diagnostic — 在线智能诊断（多步骤表单）                              -->
+  <!-- ================================================================ -->
+  <section id="diagnostic" class="relative py-20 sm:py-28 bg-gradient-to-b from-brand-black via-brand-dark/50 to-brand-dark">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+
+      <!-- Section Header -->
+      <div class="text-center mb-10 sm:mb-14" data-animate>
+        <span class="text-brand-orange text-xs sm:text-sm font-semibold tracking-widest uppercase">
+          Online Diagnostic
+        </span>
+        <h2 class="mt-3 text-2xl sm:text-3xl lg:text-4xl font-black text-white">
+          在线智能诊断
+        </h2>
+        <p class="mt-4 max-w-lg mx-auto text-sm sm:text-base text-brand-muted">
+          三步提交故障信息，工程师快速定位问题并给出方案
+        </p>
+      </div>
+
+      <!-- 步骤进度指示器 -->
+      <div class="flex items-center justify-center mb-10 sm:mb-12" data-animate>
+        <div class="flex items-center gap-0">
+          <!-- 步骤 1 -->
+          <div class="flex flex-col items-center gap-2">
+            <div id="dot-1" class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 bg-brand-blue text-white">1</div>
+            <span id="label-1" class="text-xs font-medium text-white whitespace-nowrap">品牌选择</span>
+          </div>
+          <!-- 连接线 -->
+          <div class="w-12 sm:w-20 h-0.5 mx-1 rounded-full overflow-hidden bg-white/10">
+            <div id="progress-bar" class="h-full bg-brand-blue rounded-full transition-all duration-500" style="width:0%"></div>
+          </div>
+          <!-- 步骤 2 -->
+          <div class="flex flex-col items-center gap-2">
+            <div id="dot-2" class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 bg-brand-blue/20 text-brand-blue border border-brand-blue/30">2</div>
+            <span id="label-2" class="text-xs font-medium text-brand-muted whitespace-nowrap">故障类型</span>
+          </div>
+          <!-- 连接线 -->
+          <div class="w-12 sm:w-20 h-0.5 rounded-full overflow-hidden bg-white/10"></div>
+          <!-- 步骤 3 -->
+          <div class="flex flex-col items-center gap-2">
+            <div id="dot-3" class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 bg-brand-blue/20 text-brand-blue border border-brand-blue/30">3</div>
+            <span id="label-3" class="text-xs font-medium text-brand-muted whitespace-nowrap">上传与留资</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================ -->
+      <!--  步骤 1：品牌选择                                                    -->
+      <!-- ================================================================ -->
+      <div id="step-1" class="bg-brand-dark/60 rounded-2xl border border-white/5 p-6 sm:p-8">
+        <h3 class="text-lg sm:text-xl font-bold text-white mb-2">选择机器人品牌</h3>
+        <p class="text-sm text-brand-muted mb-6">请点击选择需要诊断的机器人品牌</p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+          <button type="button" data-brand="ESTUN" class="brand-btn flex flex-col items-center justify-center gap-2 min-h-[80px] sm:min-h-[100px] p-4 rounded-xl border border-white/10 bg-brand-black/40 hover:border-brand-blue/40 hover:bg-brand-blue/5 transition-all duration-200 active:scale-95">
+            <span class="text-lg sm:text-xl font-bold text-white">ESTUN</span>
+            <span class="text-xs text-brand-muted">埃斯顿 · 中国</span>
+          </button>
+          <button type="button" data-brand="ABB" class="brand-btn flex flex-col items-center justify-center gap-2 min-h-[80px] sm:min-h-[100px] p-4 rounded-xl border border-white/10 bg-brand-black/40 hover:border-brand-blue/40 hover:bg-brand-blue/5 transition-all duration-200 active:scale-95">
+            <span class="text-lg sm:text-xl font-bold text-white">ABB</span>
+            <span class="text-xs text-brand-muted">瑞典</span>
+          </button>
+          <button type="button" data-brand="FANUC" class="brand-btn flex flex-col items-center justify-center gap-2 min-h-[80px] sm:min-h-[100px] p-4 rounded-xl border border-white/10 bg-brand-black/40 hover:border-brand-blue/40 hover:bg-brand-blue/5 transition-all duration-200 active:scale-95">
+            <span class="text-lg sm:text-xl font-bold text-white">FANUC</span>
+            <span class="text-xs text-brand-muted">发那科 · 日本</span>
+          </button>
+          <button type="button" data-brand="KUKA" class="brand-btn flex flex-col items-center justify-center gap-2 min-h-[80px] sm:min-h-[100px] p-4 rounded-xl border border-white/10 bg-brand-black/40 hover:border-brand-blue/40 hover:bg-brand-blue/5 transition-all duration-200 active:scale-95">
+            <span class="text-lg sm:text-xl font-bold text-white">KUKA</span>
+            <span class="text-xs text-brand-muted">库卡 · 德国</span>
+          </button>
+          <button type="button" data-brand="YASKAWA" class="brand-btn flex flex-col items-center justify-center gap-2 min-h-[80px] sm:min-h-[100px] p-4 rounded-xl border border-white/10 bg-brand-black/40 hover:border-brand-blue/40 hover:bg-brand-blue/5 transition-all duration-200 active:scale-95">
+            <span class="text-lg sm:text-xl font-bold text-white">YASKAWA</span>
+            <span class="text-xs text-brand-muted">安川 · 日本</span>
+          </button>
+          <button type="button" data-brand="Other" class="brand-btn flex flex-col items-center justify-center gap-2 min-h-[80px] sm:min-h-[100px] p-4 rounded-xl border border-white/10 bg-brand-black/40 hover:border-brand-blue/40 hover:bg-brand-blue/5 transition-all duration-200 active:scale-95">
+            <span class="text-lg sm:text-xl font-bold text-white">其他品牌</span>
+            <span class="text-xs text-brand-muted">国产 / 其他</span>
+          </button>
+        </div>
+
+        <div class="mt-8 flex justify-end">
+          <button type="button" id="next-btn-1" disabled
+                  class="min-h-touch px-8 py-3 rounded-lg text-sm font-semibold
+                         bg-white/10 text-brand-muted opacity-40 cursor-not-allowed
+                         transition-all duration-200">
+            下一步 → 选择故障类型
+          </button>
+        </div>
+      </div>
+
+      <!-- ================================================================ -->
+      <!--  步骤 2：故障类型                                                    -->
+      <!-- ================================================================ -->
+      <div id="step-2" class="hidden bg-brand-dark/60 rounded-2xl border border-white/5 p-6 sm:p-8">
+        <h3 class="text-lg sm:text-xl font-bold text-white mb-2">选择故障类型</h3>
+        <p class="text-sm text-brand-muted mb-6">请选择最接近的故障现象</p>
+
+        <div class="grid grid-cols-1 gap-3 sm:gap-4">
+          <button type="button" data-fault="alarm" class="fault-btn flex items-center gap-4 min-h-touch p-4 sm:p-5 rounded-xl border border-white/10 bg-brand-black/40 hover:border-brand-blue/40 hover:bg-brand-blue/5 transition-all duration-200 active:scale-[0.98]">
+            <span class="shrink-0 w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center text-xl">⚠️</span>
+            <div class="text-left">
+              <span class="text-sm sm:text-base font-semibold text-white">报错代码 / 报警</span>
+              <span class="block text-xs text-brand-muted mt-0.5">机器人示教器显示错误代码或报警信息，无法正常运行</span>
+            </div>
+          </button>
+          <button type="button" data-fault="axis" class="fault-btn flex items-center gap-4 min-h-touch p-4 sm:p-5 rounded-xl border border-white/10 bg-brand-black/40 hover:border-brand-blue/40 hover:bg-brand-blue/5 transition-all duration-200 active:scale-[0.98]">
+            <span class="shrink-0 w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center text-xl">🔧</span>
+            <div class="text-left">
+              <span class="text-sm sm:text-base font-semibold text-white">轴不运动 / 卡死</span>
+              <span class="block text-xs text-brand-muted mt-0.5">某个轴无法运动、抖动异常、异响或完全卡死</span>
+            </div>
+          </button>
+          <button type="button" data-fault="comm" class="fault-btn flex items-center gap-4 min-h-touch p-4 sm:p-5 rounded-xl border border-white/10 bg-brand-black/40 hover:border-brand-blue/40 hover:bg-brand-blue/5 transition-all duration-200 active:scale-[0.98]">
+            <span class="shrink-0 w-10 h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center text-xl">📡</span>
+            <div class="text-left">
+              <span class="text-sm sm:text-base font-semibold text-white">通信中断 / 掉线</span>
+              <span class="block text-xs text-brand-muted mt-0.5">机器人与控制器、上位机或周边设备通信异常中断</span>
+            </div>
+          </button>
+          <button type="button" data-fault="precision" class="fault-btn flex items-center gap-4 min-h-touch p-4 sm:p-5 rounded-xl border border-white/10 bg-brand-black/40 hover:border-brand-blue/40 hover:bg-brand-blue/5 transition-all duration-200 active:scale-[0.98]">
+            <span class="shrink-0 w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center text-xl">🎯</span>
+            <div class="text-left">
+              <span class="text-sm sm:text-base font-semibold text-white">精度偏差 / 轨迹偏移</span>
+              <span class="block text-xs text-brand-muted mt-0.5">运行轨迹与编程路径不一致，定位精度下降，产品良率降低</span>
+            </div>
+          </button>
+          <button type="button" data-fault="other" class="fault-btn flex items-center gap-4 min-h-touch p-4 sm:p-5 rounded-xl border border-white/10 bg-brand-black/40 hover:border-brand-blue/40 hover:bg-brand-blue/5 transition-all duration-200 active:scale-[0.98]">
+            <span class="shrink-0 w-10 h-10 rounded-lg bg-brand-blue/10 flex items-center justify-center text-xl">❓</span>
+            <div class="text-left">
+              <span class="text-sm sm:text-base font-semibold text-white">其他故障</span>
+              <span class="block text-xs text-brand-muted mt-0.5">以上分类不匹配，请在下一步描述具体问题</span>
+            </div>
+          </button>
+        </div>
+
+        <div class="mt-8 flex justify-between">
+          <button type="button" id="prev-btn-2"
+                  class="min-h-touch px-6 py-3 rounded-lg text-sm font-semibold
+                         text-brand-muted hover:text-white transition-colors duration-200">
+            ← 返回上一步
+          </button>
+          <button type="button" id="next-btn-2" disabled
+                  class="min-h-touch px-8 py-3 rounded-lg text-sm font-semibold
+                         bg-white/10 text-brand-muted opacity-40 cursor-not-allowed
+                         transition-all duration-200">
+            下一步 → 上传资料
+          </button>
+        </div>
+      </div>
+
+      <!-- ================================================================ -->
+      <!--  步骤 3：媒体上传 + 留资                                             -->
+      <!-- ================================================================ -->
+      <div id="step-3" class="hidden bg-brand-dark/60 rounded-2xl border border-white/5 p-6 sm:p-8">
+        <h3 class="text-lg sm:text-xl font-bold text-white mb-2">上传资料并留下联系方式</h3>
+        <p class="text-sm text-brand-muted mb-6">拍摄故障照片或视频，帮助我们更精准地诊断</p>
+
+        <!-- 文件上传区域 -->
+        <div
+          id="drop-zone"
+          class="relative border-2 border-dashed border-white/15 rounded-2xl
+                 p-6 sm:p-10 text-center cursor-pointer
+                 hover:border-brand-blue/40 hover:bg-brand-blue/[0.03]
+                 transition-all duration-200"
+        >
+          <input
+            type="file"
+            id="file-input"
+            accept="image/*,video/*"
+            multiple
+            class="hidden"
+          />
+
+          <!-- 上传提示 -->
+          <div id="upload-hint">
+            <div class="w-14 h-14 mx-auto rounded-2xl bg-brand-blue/10 flex items-center justify-center mb-4">
+              <svg class="w-7 h-7 text-brand-blue" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
+              </svg>
+            </div>
+            <p class="text-sm font-medium text-white mb-1">点击上传 或 拖拽文件到此处</p>
+            <p class="text-xs text-brand-muted">
+              支持图片（≤10MB）和视频（≤50MB）· 手机端可拍照/录像
+            </p>
+          </div>
+
+          <!-- 已上传文件列表 -->
+          <div id="file-list" class="hidden text-left space-y-2"></div>
+        </div>
+
+        <!-- 留资表单 -->
+        <div class="mt-6 space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- 称呼 -->
+            <div>
+              <label for="diagnostic-name" class="block text-sm font-medium text-white mb-1.5">
+                您的称呼 <span class="text-brand-orange">*</span>
+              </label>
+              <input
+                type="text"
+                id="diagnostic-name"
+                placeholder="例如：张工"
+                autocomplete="name"
+                class="w-full min-h-touch px-4 rounded-xl
+                       bg-brand-black/50 border border-white/10
+                       text-white text-sm placeholder:text-brand-muted/50
+                       focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent
+                       transition-all duration-200"
+              />
+            </div>
+            <!-- 手机号码 -->
+            <div>
+              <label for="diagnostic-phone" class="block text-sm font-medium text-white mb-1.5">
+                手机号码 <span class="text-brand-orange">*</span>
+              </label>
+              <input
+                type="tel"
+                id="diagnostic-phone"
+                placeholder="请输入 11 位手机号码"
+                autocomplete="tel"
+                maxlength="11"
+                class="w-full min-h-touch px-4 rounded-xl
+                       bg-brand-black/50 border border-white/10
+                       text-white text-sm placeholder:text-brand-muted/50
+                       focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent
+                       transition-all duration-200"
+              />
+            </div>
+          </div>
+          <!-- 故障描述 -->
+          <div>
+            <label for="diagnostic-desc" class="block text-sm font-medium text-white mb-1.5">
+              故障描述 <span class="text-xs text-brand-muted font-normal">（选填）</span>
+            </label>
+            <textarea
+              id="diagnostic-desc"
+              rows="3"
+              placeholder="请简要描述故障现象、发生频率、已尝试的排查措施等..."
+              class="w-full min-h-[80px] px-4 py-3 rounded-xl resize-none
+                     bg-brand-black/50 border border-white/10
+                     text-white text-sm placeholder:text-brand-muted/50
+                     focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent
+                     transition-all duration-200"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- 提交按钮 -->
+        <div class="mt-8 flex justify-between">
+          <button type="button" id="prev-btn-3"
+                  class="min-h-touch px-6 py-3 rounded-lg text-sm font-semibold
+                         text-brand-muted hover:text-white transition-colors duration-200">
+            ← 返回上一步
+          </button>
+          <button type="button" id="submit-btn"
+                  class="btn-primary !text-base !px-8">
+            <span id="submit-text">提交诊断请求</span>
+            <!-- Loading 旋转器 -->
+            <svg id="submit-spinner" class="hidden w-5 h-5 ml-2 animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  Knowledge — 行业知识库（折叠问答）                                   -->
+  <!-- ================================================================ -->
+  <section id="knowledge" class="relative py-20 sm:py-28 bg-brand-black">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+
+      <!-- Section Header -->
+      <div class="text-center mb-12 sm:mb-16" data-animate>
+        <span class="text-brand-blue text-xs sm:text-sm font-semibold tracking-widest uppercase">
+          Industry Know-How
+        </span>
+        <h2 class="mt-3 text-2xl sm:text-3xl lg:text-4xl font-black text-white">
+          行业知识库
+        </h2>
+        <p class="mt-4 max-w-lg mx-auto text-sm sm:text-base text-brand-muted">
+          用专业认知帮您做出更好的运维决策
+        </p>
+      </div>
+
+      <!-- 知识分类标签 -->
+      <div class="flex flex-wrap items-center justify-center gap-2 mb-10" data-animate>
+        <span class="px-3 py-1.5 rounded-full bg-brand-blue/10 text-brand-blue text-xs font-medium border border-brand-blue/20">保养周期</span>
+        <span class="px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-medium border border-green-500/20">备件管理</span>
+        <span class="px-3 py-1.5 rounded-full bg-brand-orange/10 text-brand-orange text-xs font-medium border border-brand-orange/20">故障排查</span>
+        <span class="px-3 py-1.5 rounded-full bg-purple-500/10 text-purple-400 text-xs font-medium border border-purple-500/20">降本增效</span>
+        <span class="px-3 py-1.5 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-medium border border-cyan-500/20">选型决策</span>
+      </div>
+
+      <!-- Accordion 列表 -->
+      <div class="space-y-3" data-animate>
+
+        <!-- Q1 -->
+        <div class="kb-item bg-brand-dark/60 rounded-2xl border border-white/5 overflow-hidden">
+          <button class="kb-toggle w-full flex items-center gap-4 p-5 sm:p-6 text-left min-h-touch
+                         hover:bg-white/[0.02] transition-colors duration-200">
+            <span class="shrink-0 w-10 h-10 rounded-xl bg-brand-blue/10 flex items-center justify-center text-lg">🕐</span>
+            <span class="flex-1 text-sm sm:text-base font-semibold text-white pr-2">工业机器人多久需要保养一次？</span>
+            <svg class="kb-arrow shrink-0 w-5 h-5 text-brand-muted transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div class="kb-body hidden">
+            <div class="px-5 sm:px-6 pb-5 sm:pb-6 -mt-1 text-sm text-brand-muted leading-relaxed space-y-3">
+              <p>工业机器人的保养周期取决于<strong class="text-white">工作负荷、环境工况和品牌型号</strong>，行业通用建议如下：</p>
+              <ul class="list-disc pl-4 space-y-1.5">
+                <li><strong class="text-white">日常点检（每班次）</strong>：外观检查、异响判断、线缆磨损目视、示教器功能确认，约 5–10 分钟</li>
+                <li><strong class="text-white">一级保养（每 3 个月或 500 小时）</strong>：各轴润滑脂补充、连接螺栓紧固、过滤网清洁、零点校准检查</li>
+                <li><strong class="text-white">二级保养（每 12 个月或 2000 小时）</strong>：减速机润滑油更换、电机绝缘检测、控制柜内部除尘、电池更换、精度测试</li>
+                <li><strong class="text-white">大修保养（每 3–5 年或 10000 小时）</strong>：关键部件拆解检查、密封件更换、线束老化评估、整机精度全面校准</li>
+              </ul>
+              <p class="text-xs text-brand-muted">💡 高粉尘、高湿度、强腐蚀环境建议缩短 30%–50% 保养间隔。埃斯顿等国产品牌部分机型支持远程健康监测，可按实际状态触发保养。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="kb-item bg-brand-dark/60 rounded-2xl border border-white/5 overflow-hidden">
+          <button class="kb-toggle w-full flex items-center gap-4 p-5 sm:p-6 text-left min-h-touch
+                         hover:bg-white/[0.02] transition-colors duration-200">
+            <span class="shrink-0 w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center text-lg">🔧</span>
+            <span class="flex-1 text-sm sm:text-base font-semibold text-white pr-2">常规保养包含哪些具体内容？</span>
+            <svg class="kb-arrow shrink-0 w-5 h-5 text-brand-muted transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div class="kb-body hidden">
+            <div class="px-5 sm:px-6 pb-5 sm:pb-6 -mt-1 text-sm text-brand-muted leading-relaxed space-y-3">
+              <p>一套完整的常规保养通常涵盖<strong class="text-white">机械、电气、控制、安全</strong>四大系统：</p>
+              <ul class="list-disc pl-4 space-y-1.5">
+                <li><strong class="text-white">机械系统</strong>：各轴减速机/齿轮箱换油或补脂、平衡缸压力检测、皮带张紧力调整、各关节轴承游隙测量</li>
+                <li><strong class="text-white">电气系统</strong>：伺服电机绝缘电阻测试、动力线与编码器线导通检查、控制柜内端子紧固、风扇与散热系统清洁</li>
+                <li><strong class="text-white">控制系统</strong>：电池电压检测与预防性更换、程序与参数备份、示教器触屏校准、固件版本升级评估</li>
+                <li><strong class="text-white">安全系统</strong>：急停回路功能测试、安全门锁与光幕联锁验证、抱闸制动力矩测量、碰撞检测灵敏度校准</li>
+              </ul>
+              <p class="text-xs text-brand-muted">💡 华晟智造针对埃斯顿机器人提供标准化的 72 项保养检查清单，每项均有量化验收标准，确保保养质量可追溯。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="kb-item bg-brand-dark/60 rounded-2xl border border-white/5 overflow-hidden">
+          <button class="kb-toggle w-full flex items-center gap-4 p-5 sm:p-6 text-left min-h-touch
+                         hover:bg-white/[0.02] transition-colors duration-200">
+            <span class="shrink-0 w-10 h-10 rounded-xl bg-brand-orange/10 flex items-center justify-center text-lg">⏱️</span>
+            <span class="flex-1 text-sm sm:text-base font-semibold text-white pr-2">保养一台机器人一般需要停机多长时间？</span>
+            <svg class="kb-arrow shrink-0 w-5 h-5 text-brand-muted transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div class="kb-body hidden">
+            <div class="px-5 sm:px-6 pb-5 sm:pb-6 -mt-1 text-sm text-brand-muted leading-relaxed space-y-3">
+              <p>停机时长取决于保养级别和机器人复杂程度，行业参考如下：</p>
+              <div class="overflow-x-auto">
+                <table class="w-full text-xs sm:text-sm">
+                  <thead>
+                    <tr class="border-b border-white/10">
+                      <th class="text-left py-2 pr-4 text-white font-semibold">保养级别</th>
+                      <th class="text-left py-2 pr-4 text-white font-semibold">预估停机</th>
+                      <th class="text-left py-2 text-white font-semibold">可并行生产</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-b border-white/5"><td class="py-2 pr-4">日常点检</td><td class="py-2 pr-4">5–15 分钟</td><td class="py-2">✅ 可利用换班间隙</td></tr>
+                    <tr class="border-b border-white/5"><td class="py-2 pr-4">一级保养</td><td class="py-2 pr-4">2–4 小时</td><td class="py-2">⚠️ 需排入生产计划</td></tr>
+                    <tr class="border-b border-white/5"><td class="py-2 pr-4">二级保养</td><td class="py-2 pr-4">1–2 个班次</td><td class="py-2">❌ 建议安排周末/淡季</td></tr>
+                    <tr><td class="py-2 pr-4">大修保养</td><td class="py-2 pr-4">3–7 天</td><td class="py-2">❌ 需提前备件+备用方案</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="text-xs text-brand-muted">💡 我们通常建议客户将二级以上保养安排在节假日或设备检修窗口期。华晟智造可派驻工程师配合您的生产节奏，最大限度减少产能损失。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="kb-item bg-brand-dark/60 rounded-2xl border border-white/5 overflow-hidden">
+          <button class="kb-toggle w-full flex items-center gap-4 p-5 sm:p-6 text-left min-h-touch
+                         hover:bg-white/[0.02] transition-colors duration-200">
+            <span class="shrink-0 w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-lg">🔍</span>
+            <span class="flex-1 text-sm sm:text-base font-semibold text-white pr-2">保养前应该提前做哪些检测和准备？</span>
+            <svg class="kb-arrow shrink-0 w-5 h-5 text-brand-muted transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div class="kb-body hidden">
+            <div class="px-5 sm:px-6 pb-5 sm:pb-6 -mt-1 text-sm text-brand-muted leading-relaxed space-y-3">
+              <p>科学的保养前置工作可以<strong class="text-white">缩短停机时间 30% 以上</strong>，建议做好以下准备：</p>
+              <ul class="list-disc pl-4 space-y-1.5">
+                <li><strong class="text-white">状态数据采集</strong>：导出最近 3 个月的报警日志、电机电流趋势、各轴扭矩数据，提前分析异常模式</li>
+                <li><strong class="text-white">备件预判与采购</strong>：根据设备运行小时数和历史故障记录，提前采购高损耗备件（电池、滤网、密封圈、润滑脂等）</li>
+                <li><strong class="text-white">精度预检测</strong>：使用激光跟踪仪或球杆仪测量当前位姿精度，与出厂数据对比，确定是否需要精密校准</li>
+                <li><strong class="text-white">工装与工具准备</strong>：专用扳手、扭力扳手、绝缘测试仪、示波器等按保养清单提前就位</li>
+                <li><strong class="text-white">安全预案</strong>：确认备用设备/备用工位可临时顶替，降低保养期间全线停机的风险</li>
+              </ul>
+              <p class="text-xs text-brand-muted">💡 华晟智造可为签约客户免费提供年度设备健康评估报告，提前预警潜在风险，帮助客户做好预算和排产规划。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="kb-item bg-brand-dark/60 rounded-2xl border border-white/5 overflow-hidden">
+          <button class="kb-toggle w-full flex items-center gap-4 p-5 sm:p-6 text-left min-h-touch
+                         hover:bg-white/[0.02] transition-colors duration-200">
+            <span class="shrink-0 w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center text-lg">📦</span>
+            <span class="flex-1 text-sm sm:text-base font-semibold text-white pr-2">工业机器人常见的备品备件有哪些？</span>
+            <svg class="kb-arrow shrink-0 w-5 h-5 text-brand-muted transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div class="kb-body hidden">
+            <div class="px-5 sm:px-6 pb-5 sm:pb-6 -mt-1 text-sm text-brand-muted leading-relaxed space-y-3">
+              <p>合理储备备件是缩短故障停机时间的<strong class="text-white">最有效手段</strong>。按更换频率和重要性分类：</p>
+              <ul class="list-disc pl-4 space-y-1.5">
+                <li><strong class="text-white">高频率消耗件（建议常备）</strong>：编码器电池、控制柜滤网、各轴密封圈/防尘罩、润滑脂/润滑油、示教器触摸屏保护膜</li>
+                <li><strong class="text-white">中等频率易损件（建议备 1–2 套）</strong>：伺服电机动力线缆与编码器线缆、IO 模块、抱闸线圈、平衡缸密封包、急停按钮总成</li>
+                <li><strong class="text-white">低频率关键件（视预算选择性备货）</strong>：减速机（RV/谐波）、伺服电机、伺服驱动器/电源模块、示教器总成、控制柜主板</li>
+                <li><strong class="text-white">埃斯顿专用件</strong>：我们与埃斯顿建立了备件绿色通道，常用件 48 小时内直达，紧急件可安排专车配送</li>
+              </ul>
+              <p class="text-xs text-brand-muted">💡 华晟智造可为客户量身定制「备件安全库存方案」，根据您的设备型号、运行强度和预算，给出精准的备件清单和补货策略。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="kb-item bg-brand-dark/60 rounded-2xl border border-white/5 overflow-hidden">
+          <button class="kb-toggle w-full flex items-center gap-4 p-5 sm:p-6 text-left min-h-touch
+                         hover:bg-white/[0.02] transition-colors duration-200">
+            <span class="shrink-0 w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-lg">⚠️</span>
+            <span class="flex-1 text-sm sm:text-base font-semibold text-white pr-2">哪些预警信号说明机器人需要立即检修？</span>
+            <svg class="kb-arrow shrink-0 w-5 h-5 text-brand-muted transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div class="kb-body hidden">
+            <div class="px-5 sm:px-6 pb-5 sm:pb-6 -mt-1 text-sm text-brand-muted leading-relaxed space-y-3">
+              <p>以下信号出现<strong class="text-white">任意 2 项以上</strong>，建议立即安排专业诊断，避免小问题演变成大故障：</p>
+              <ul class="list-disc pl-4 space-y-1.5">
+                <li><strong class="text-white">异响与振动</strong>：关节运动时出现咔嗒声、摩擦尖叫声或不规则振动，常见于减速机磨损或轴承损坏</li>
+                <li><strong class="text-white">精度漂移</strong>：TCP 定位偏差超过 ±0.5mm（常规精度机型），焊接/切割轨迹肉眼可见偏移</li>
+                <li><strong class="text-white">电机温度异常</strong>：伺服电机外壳温度持续超过 80°C，或相邻轴温差超过 15°C</li>
+                <li><strong class="text-white">报警频率上升</strong>：同一报警代码（如碰撞检测、过载、编码器通信错误）一周内出现 3 次以上</li>
+                <li><strong class="text-white">电流波动</strong>：某轴电机在空载状态下电流值明显高于其他轴或历史同期值</li>
+                <li><strong class="text-white">线缆外观异常</strong>：动力线或编码器线出现龟裂、硬化、接头氧化变色</li>
+              </ul>
+              <p class="text-xs text-brand-muted">💡 立即使用我们的<a href="#diagnostic" class="text-brand-blue underline">在线智能诊断</a>工具，上传故障视频或照片，工程师将快速给出初步判断。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="kb-item bg-brand-dark/60 rounded-2xl border border-white/5 overflow-hidden">
+          <button class="kb-toggle w-full flex items-center gap-4 p-5 sm:p-6 text-left min-h-touch
+                         hover:bg-white/[0.02] transition-colors duration-200">
+            <span class="shrink-0 w-10 h-10 rounded-xl bg-brand-blue/10 flex items-center justify-center text-lg">⚖️</span>
+            <span class="flex-1 text-sm sm:text-base font-semibold text-white pr-2">原厂保养与第三方专业保养有什么区别？</span>
+            <svg class="kb-arrow shrink-0 w-5 h-5 text-brand-muted transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div class="kb-body hidden">
+            <div class="px-5 sm:px-6 pb-5 sm:pb-6 -mt-1 text-sm text-brand-muted leading-relaxed space-y-3">
+              <p>两者核心差异不在于技术能力，而在于<strong class="text-white">服务模式与成本结构</strong>：</p>
+              <div class="overflow-x-auto">
+                <table class="w-full text-xs sm:text-sm">
+                  <thead>
+                    <tr class="border-b border-white/10">
+                      <th class="text-left py-2 pr-4 text-white font-semibold">对比维度</th>
+                      <th class="text-left py-2 pr-4 text-white font-semibold">原厂保养</th>
+                      <th class="text-left py-2 text-white font-semibold">华晟智造（授权第三方）</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-b border-white/5"><td class="py-2 pr-4">响应速度</td><td class="py-2 pr-4">3–7 个工作日</td><td class="py-2 text-green-400 font-medium">2–48 小时</td></tr>
+                    <tr class="border-b border-white/5"><td class="py-2 pr-4">服务价格</td><td class="py-2 pr-4">标准定价</td><td class="py-2 text-green-400 font-medium">通常低 20%–40%</td></tr>
+                    <tr class="border-b border-white/5"><td class="py-2 pr-4">备件渠道</td><td class="py-2 pr-4">原厂直供</td><td class="py-2">原厂件 + 认证替代件</td></tr>
+                    <tr class="border-b border-white/5"><td class="py-2 pr-4">多品牌能力</td><td class="py-2 pr-4">单一品牌</td><td class="py-2 text-green-400 font-medium">覆盖主流品牌</td></tr>
+                    <tr class="border-b border-white/5"><td class="py-2 pr-4">官方质保</td><td class="py-2 pr-4">✅ 原厂质保</td><td class="py-2 text-green-400 font-medium">✅ 授权联保</td></tr>
+                    <tr><td class="py-2 pr-4">灵活度</td><td class="py-2 pr-4">标准化流程</td><td class="py-2 text-green-400 font-medium">可定制服务方案</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="text-xs text-brand-muted">💡 华晟智造作为埃斯顿北方七省区官方授权服务商，兼具「原厂级标准」与「本地化响应速度」，是平衡质量与成本的最优解。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="kb-item bg-brand-dark/60 rounded-2xl border border-white/5 overflow-hidden">
+          <button class="kb-toggle w-full flex items-center gap-4 p-5 sm:p-6 text-left min-h-touch
+                         hover:bg-white/[0.02] transition-colors duration-200">
+            <span class="shrink-0 w-10 h-10 rounded-xl bg-brand-orange/10 flex items-center justify-center text-lg">📈</span>
+            <span class="flex-1 text-sm sm:text-base font-semibold text-white pr-2">延保增值服务能给企业带来什么价值？</span>
+            <svg class="kb-arrow shrink-0 w-5 h-5 text-brand-muted transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div class="kb-body hidden">
+            <div class="px-5 sm:px-6 pb-5 sm:pb-6 -mt-1 text-sm text-brand-muted leading-relaxed space-y-3">
+              <p>延保服务不是简单的「保险」，而是<strong class="text-white">系统性的设备全生命周期成本优化方案</strong>：</p>
+              <ul class="list-disc pl-4 space-y-1.5">
+                <li><strong class="text-white">预算可控</strong>：将不可预测的维修支出转化为固定的年度服务费，便于财务规划，避免突发大修冲击现金流</li>
+                <li><strong class="text-white">响应优先</strong>：延保客户享最高响应优先级，紧急故障 2 小时内远程介入，必要时 24 小时内工程师到场</li>
+                <li><strong class="text-white">预防为主</strong>：延保方案包含定期健康检查和预防性保养，从源头减少故障发生，而非被动等待设备损坏</li>
+                <li><strong class="text-white">残值保护</strong>：完整的保养记录和原厂件维修履历可显著提升二手机器人的评估价值（通常溢价 15%–25%）</li>
+                <li><strong class="text-white">技术赋能</strong>：延保期内免费提供操作培训、编程优化建议和工艺升级咨询，帮助客户持续提升设备效率</li>
+              </ul>
+              <p class="text-xs text-brand-muted">💡 行业数据显示，实施全面延保方案的企业，机器人非计划停机减少 60% 以上，综合运维成本降低 25%–35%。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="kb-item bg-brand-dark/60 rounded-2xl border border-white/5 overflow-hidden">
+          <button class="kb-toggle w-full flex items-center gap-4 p-5 sm:p-6 text-left min-h-touch
+                         hover:bg-white/[0.02] transition-colors duration-200">
+            <span class="shrink-0 w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-lg">🔄</span>
+            <span class="flex-1 text-sm sm:text-base font-semibold text-white pr-2">工业机器人全生命周期管理包括哪些阶段？</span>
+            <svg class="kb-arrow shrink-0 w-5 h-5 text-brand-muted transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div class="kb-body hidden">
+            <div class="px-5 sm:px-6 pb-5 sm:pb-6 -mt-1 text-sm text-brand-muted leading-relaxed space-y-3">
+              <p>一台工业机器人的完整生命周期通常为 <strong class="text-white">10–15 年</strong>，可分为五个阶段，每个阶段的服务需求不同：</p>
+              <ul class="list-disc pl-4 space-y-1.5">
+                <li><strong class="text-white">① 选型与导入期（0–3 个月）</strong>：工艺匹配分析、负载与臂展选型、品牌对比评估、投资回报测算。华晟智造可提供多品牌横向对比咨询</li>
+                <li><strong class="text-white">② 安装调试期（1–3 个月）</strong>：现场安装、编程调试、节拍优化、操作培训。确保机器人快速爬坡至设计产能</li>
+                <li><strong class="text-white">③ 稳定运行期（1–7 年）</strong>：预防性保养、定期精度校准、备件计划、软件升级。此阶段运维质量决定设备寿命上限</li>
+                <li><strong class="text-white">④ 老化维护期（7–12 年）</strong>：关键部件更换、线束翻新、精度补偿、控制系统升级。科学的翻新可延长寿命 3–5 年</li>
+                <li><strong class="text-white">⑤ 退役处置期</strong>：残值评估、翻新再制造、二手转售或环保回收。华晟智造提供专业的二手机翻新与销售通路</li>
+              </ul>
+              <p class="text-xs text-brand-muted">💡 全生命周期视角下，运维阶段投入仅占 TCO（总拥有成本）的 15%–20%，却决定了设备 80% 以上的可用性和产出质量。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="kb-item bg-brand-dark/60 rounded-2xl border border-white/5 overflow-hidden">
+          <button class="kb-toggle w-full flex items-center gap-4 p-5 sm:p-6 text-left min-h-touch
+                         hover:bg-white/[0.02] transition-colors duration-200">
+            <span class="shrink-0 w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center text-lg">✅</span>
+            <span class="flex-1 text-sm sm:text-base font-semibold text-white pr-2">如何选择靠谱的工业机器人后服务商？</span>
+            <svg class="kb-arrow shrink-0 w-5 h-5 text-brand-muted transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div class="kb-body hidden">
+            <div class="px-5 sm:px-6 pb-5 sm:pb-6 -mt-1 text-sm text-brand-muted leading-relaxed space-y-3">
+              <p>选择一个靠谱的后服务商，建议从以下 <strong class="text-white">五个维度</strong> 综合评估：</p>
+              <ul class="list-disc pl-4 space-y-1.5">
+                <li><strong class="text-white">① 官方资质</strong>：是否持有主流品牌（如埃斯顿、KUKA、ABB 等）的官方授权服务资质？官方授权意味着经过品牌方的技术培训和能力认证</li>
+                <li><strong class="text-white">② 工程师团队</strong>：工程师是否持有品牌官方技术认证？平均从业年限？是否具备多品牌服务能力？能否提供过往案例佐证？</li>
+                <li><strong class="text-white">③ 响应速度</strong>：紧急故障承诺多长时间响应？是否在您的工厂所在区域设有服务网点或常驻工程师？</li>
+                <li><strong class="text-white">④ 备件保障</strong>：是否拥有稳定的原厂备件采购渠道？常用备件是否有库存？紧急备件的交付周期是多久？</li>
+                <li><strong class="text-white">⑤ 服务体系</strong>：是否提供标准化的保养清单和验收报告？是否支持数字化维保档案？是否提供 7×24 小时热线支持？</li>
+              </ul>
+              <p class="text-xs text-brand-muted">💡 华晟智造同时满足以上五项标准 — <a href="#contact" class="text-brand-blue underline">联系我们</a>索取资质证明和客户案例清单，眼见为实。</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 底部 CTA -->
+      <div class="mt-12 text-center" data-animate>
+        <p class="text-sm text-brand-muted mb-4">还有更多问题？不如直接问工程师</p>
+        <a href="#diagnostic" class="btn-primary !text-base !px-8">
+          <svg class="w-5 h-5 mr-2 -ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 2L3 14h8l-2 8 10-12h-8l2-8z" />
+          </svg>
+          在线智能诊断
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  Contact — 联系我们 + 留资表单                                       -->
+  <!-- ================================================================ -->
+  <section id="contact" class="relative py-20 sm:py-28 bg-brand-dark">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+      <!-- Section Header -->
+      <div class="text-center mb-14 sm:mb-18" data-animate>
+        <span class="text-brand-blue text-xs sm:text-sm font-semibold tracking-widest uppercase">
+          Contact Us
+        </span>
+        <h2 class="mt-3 text-2xl sm:text-3xl lg:text-4xl font-black text-white">
+          联系我们
+        </h2>
+        <p class="mt-4 max-w-xl mx-auto text-sm sm:text-base text-brand-muted">
+          无论设备故障还是技术咨询，我们随时待命
+        </p>
+      </div>
+
+      <!-- 双栏布局：联系方式 + 留资表单 -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+
+        <!-- 左栏：联系信息 -->
+        <div data-animate>
+          <h3 class="text-xl font-bold text-white mb-6">联系方式</h3>
+
+          <div class="space-y-5">
+            <!-- 服务热线 -->
+            <a href="tel:400-000-0000" class="flex items-start gap-4 p-4 rounded-xl bg-brand-black/40 border border-white/5 hover:border-brand-blue/30 transition-colors duration-200 group">
+              <div class="shrink-0 w-12 h-12 rounded-xl bg-brand-blue/10 flex items-center justify-center group-hover:bg-brand-blue/20 transition-colors">
+                <svg class="w-6 h-6 text-brand-blue" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+              </div>
+              <div>
+                <p class="text-xs text-brand-muted mb-0.5">7×24 小时服务热线</p>
+                <p class="text-lg font-bold text-white group-hover:text-brand-blue transition-colors">400-000-0000</p>
+                <p class="text-xs text-brand-muted mt-0.5">紧急维修请直接拨打，非工作时间自动转接值班工程师</p>
+              </div>
+            </a>
+
+            <!-- 邮箱 -->
+            <a href="mailto:service@hszz-tech.com" class="flex items-start gap-4 p-4 rounded-xl bg-brand-black/40 border border-white/5 hover:border-brand-blue/30 transition-colors duration-200 group">
+              <div class="shrink-0 w-12 h-12 rounded-xl bg-brand-blue/10 flex items-center justify-center group-hover:bg-brand-blue/20 transition-colors">
+                <svg class="w-6 h-6 text-brand-blue" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div>
+                <p class="text-xs text-brand-muted mb-0.5">商务合作 & 技术咨询</p>
+                <p class="text-lg font-bold text-white group-hover:text-brand-blue transition-colors">service@hszz-tech.com</p>
+                <p class="text-xs text-brand-muted mt-0.5">工作日 2 小时内回复，技术方案 24 小时内出具</p>
+              </div>
+            </a>
+
+            <!-- 地址 -->
+            <div class="flex items-start gap-4 p-4 rounded-xl bg-brand-black/40 border border-white/5">
+              <div class="shrink-0 w-12 h-12 rounded-xl bg-brand-blue/10 flex items-center justify-center">
+                <svg class="w-6 h-6 text-brand-blue" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <div>
+                <p class="text-xs text-brand-muted mb-0.5">公司地址</p>
+                <p class="text-base font-semibold text-white leading-relaxed">北京市大兴区经济技术开发区<br class="sm:hidden" />荣华南路 X 号院 X 号楼</p>
+                <p class="text-xs text-brand-muted mt-0.5">来访请提前预约，以便我们安排工程师接待</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 快速联系提示 -->
+          <div class="mt-8 p-5 rounded-2xl bg-brand-orange/10 border border-brand-orange/20">
+            <div class="flex items-start gap-3">
+              <span class="shrink-0 text-xl">⚡</span>
+              <div>
+                <p class="text-sm font-semibold text-brand-orange mb-1">设备紧急停机？</p>
+                <p class="text-xs text-brand-muted leading-relaxed">
+                  直接拨打上方 400 热线，报出故障品牌与现象，
+                  我们的工程师可在 <strong class="text-white">2 小时内</strong> 远程介入诊断。
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 微信二维码名片 -->
+          <div class="mt-8">
+            <h4 class="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+              <svg class="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 01.213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 00.167-.054l1.903-1.114a.864.864 0 01.717-.098 10.16 10.16 0 002.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178A1.17 1.17 0 014.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178 1.17 1.17 0 01-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 01.598.082l1.584.926a.272.272 0 00.14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 01-.023-.156.49.49 0 01.201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.952-7.062-6.122zm-2.18 2.769c.535 0 .969.44.969.982a.976.976 0 01-.969.983.976.976 0 01-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 01-.969.983.976.976 0 01-.969-.983c0-.542.434-.982.97-.982z"/>
+              </svg>
+              微信扫码 · 直接联系工程师
+            </h4>
+            <div class="grid grid-cols-2 gap-4">
+              <!-- 工程师 1 -->
+              <div class="bg-brand-black/50 rounded-2xl border border-white/5 p-4 sm:p-5 text-center
+                          hover:border-brand-blue/30 transition-all duration-200 group">
+                <div class="w-32 h-32 sm:w-36 sm:h-36 mx-auto rounded-xl bg-white p-2">
+                  <img
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://work.weixin.qq.com/contact/engineer-zhang"
+                    alt="张工企业微信二维码"
+                    class="w-full h-full object-contain"
+                    loading="lazy"
+                  />
+                </div>
+                <p class="mt-3 text-sm font-bold text-white group-hover:text-brand-blue transition-colors">张工</p>
+                <p class="text-xs text-brand-muted mt-0.5">技术服务经理</p>
+                <p class="text-xs text-brand-muted mt-1">售前咨询 · 方案评估</p>
+              </div>
+
+              <!-- 工程师 2 -->
+              <div class="bg-brand-black/50 rounded-2xl border border-white/5 p-4 sm:p-5 text-center
+                          hover:border-brand-blue/30 transition-all duration-200 group">
+                <div class="w-32 h-32 sm:w-36 sm:h-36 mx-auto rounded-xl bg-white p-2">
+                  <img
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://work.weixin.qq.com/contact/engineer-li"
+                    alt="李工企业微信二维码"
+                    class="w-full h-full object-contain"
+                    loading="lazy"
+                  />
+                </div>
+                <p class="mt-3 text-sm font-bold text-white group-hover:text-brand-blue transition-colors">李工</p>
+                <p class="text-xs text-brand-muted mt-0.5">售后工程师</p>
+                <p class="text-xs text-brand-muted mt-1">故障诊断 · 现场调度</p>
+              </div>
+            </div>
+            <p class="mt-3 text-xs text-brand-muted text-center">
+              扫码添加工程师企业微信，获取一对一技术支持
+            </p>
+          </div>
+        </div>
+
+        <!-- 右栏：留资表单 -->
+        <div data-animate>
+          <h3 class="text-xl font-bold text-white mb-2">在线留言</h3>
+          <p class="text-sm text-brand-muted mb-6">留下您的需求和联系方式，我们将尽快与您对接</p>
+
+          <form id="contact-form" class="space-y-4" novalidate>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="contact-name" class="block text-sm font-medium text-white mb-1.5">
+                  您的称呼 <span class="text-brand-orange">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="contact-name"
+                  name="name"
+                  placeholder="例如：李经理"
+                  autocomplete="name"
+                  required
+                  class="w-full min-h-touch px-4 rounded-xl
+                         bg-brand-black/50 border border-white/10
+                         text-white text-sm placeholder:text-brand-muted/50
+                         focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent
+                         transition-all duration-200"
+                />
+                <p class="contact-field-error hidden text-xs text-red-400 mt-1.5"></p>
+              </div>
+              <div>
+                <label for="contact-phone" class="block text-sm font-medium text-white mb-1.5">
+                  手机号码 <span class="text-brand-orange">*</span>
+                </label>
+                <input
+                  type="tel"
+                  id="contact-phone"
+                  name="phone"
+                  placeholder="请输入 11 位手机号码"
+                  autocomplete="tel"
+                  maxlength="11"
+                  required
+                  class="w-full min-h-touch px-4 rounded-xl
+                         bg-brand-black/50 border border-white/10
+                         text-white text-sm placeholder:text-brand-muted/50
+                         focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent
+                         transition-all duration-200"
+                />
+                <p class="contact-field-error hidden text-xs text-red-400 mt-1.5"></p>
+              </div>
+            </div>
+
+            <div>
+              <label for="contact-company" class="block text-sm font-medium text-white mb-1.5">
+                公司名称 <span class="text-xs text-brand-muted font-normal">（选填）</span>
+              </label>
+              <input
+                type="text"
+                id="contact-company"
+                name="company"
+                placeholder="请输入您的公司或单位名称"
+                class="w-full min-h-touch px-4 rounded-xl
+                       bg-brand-black/50 border border-white/10
+                       text-white text-sm placeholder:text-brand-muted/50
+                       focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent
+                       transition-all duration-200"
+              />
+            </div>
+
+            <div>
+              <label for="contact-message" class="block text-sm font-medium text-white mb-1.5">
+                需求描述 <span class="text-xs text-brand-muted font-normal">（选填）</span>
+              </label>
+              <textarea
+                id="contact-message"
+                name="message"
+                rows="4"
+                placeholder="请简要描述您的需求，例如：设备品牌型号、故障现象、期望的服务类型等..."
+                class="w-full min-h-[80px] px-4 py-3 rounded-xl resize-none
+                       bg-brand-black/50 border border-white/10
+                       text-white text-sm placeholder:text-brand-muted/50
+                       focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent
+                       transition-all duration-200"
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              id="contact-submit-btn"
+              class="btn-primary w-full !text-base"
+            >
+              <span id="contact-submit-text">提交留言</span>
+              <svg id="contact-submit-spinner" class="hidden w-5 h-5 ml-2 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+              </svg>
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!--  Footer — 页脚                                                     -->
+  <!-- ================================================================ -->
+  <footer class="relative bg-brand-black border-t border-white/5 py-10 sm:py-12">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <!-- 左侧：Logo + 版权 -->
+        <div class="flex flex-col items-center md:items-start gap-3">
+          <!-- Logo -->
+          <a href="#hero" class="flex items-center gap-2.5">
+            <svg class="w-7 h-7 text-brand-blue" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 2L28 8V24L16 30L4 24V8L16 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <circle cx="16" cy="16" r="6" stroke="currentColor" stroke-width="2"/>
+              <circle cx="16" cy="16" r="2.5" fill="currentColor"/>
+            </svg>
+            <span class="text-base font-bold text-white">华晟智造</span>
+          </a>
+          <p class="text-xs text-brand-muted text-center md:text-left">
+            &copy; 2024–<span id="current-year"></span> 北京华晟智造科技有限公司 版权所有
+          </p>
+        </div>
+
+        <!-- 中间：快捷链接 -->
+        <div class="flex items-center gap-6 text-xs text-brand-muted">
+          <a href="#hero"       class="hover:text-white transition-colors">首页</a>
+          <a href="#services"   class="hover:text-white transition-colors">业务范围</a>
+          <a href="#diagnostic" class="hover:text-white transition-colors">在线诊断</a>
+          <a href="#cases"      class="hover:text-white transition-colors">典型案例</a>
+          <a href="#knowledge"  class="hover:text-white transition-colors">知识库</a>
+          <a href="#contact"    class="hover:text-white transition-colors">联系我们</a>
+        </div>
+
+        <!-- 右侧：备案号 -->
+        <div class="text-xs text-brand-muted text-center md:text-right">
+          <p>京ICP备XXXXXXXX号-X</p>
+          <p class="mt-0.5">京公网安备 XXXXXXXXXXXX 号</p>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ================================================================ -->
+  <!--  提交成功弹窗                                                        -->
+  <!-- ================================================================ -->
+  <div
+    id="success-modal"
+    class="hidden fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm
+           items-center justify-center px-4"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+  >
+    <div class="relative bg-brand-dark border border-white/10 rounded-2xl
+                w-full max-w-md p-8 text-center
+                animate-slide-up shadow-2xl">
+      <!-- 成功图标 -->
+      <div class="w-16 h-16 mx-auto rounded-full bg-green-500/15 flex items-center justify-center mb-5">
+        <svg class="w-9 h-9 text-green-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+
+      <h3 id="modal-title" class="text-xl sm:text-2xl font-bold text-white mb-3">
+        感谢您的信任！
+      </h3>
+      <p class="text-sm text-brand-muted leading-relaxed mb-6">
+        我们已收到您的诊断请求。<br />
+        工程师将在 <strong class="text-brand-blue">15 分钟内</strong> 与您联系，<br />
+        请保持手机畅通。
+      </p>
+
+      <button
+        type="button"
+        id="close-modal"
+        class="btn-primary w-full !text-base"
+      >
+        我知道了
+      </button>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
