@@ -8,9 +8,16 @@
  *   id          - 唯一标识
  *   title       - 案例标题
  *   industry    - 所属行业（用于标签展示）
- *   image       - 封面图 URL（支持 Unsplash / 本地路径）
+ *   image       - 封面图 URL（留空则使用 images.js 中 'case.default' 默认图）
  *   description - 案例简述（控制在 80 字以内）
+ *
+ * 图片替换：
+ *   1. 将案例图片放入 public/images/cases/
+ *   2. 下方 image 字段填写 '/images/cases/xxx.jpg'
+ *   3. 不填则自动使用 src/data/images.js 中的默认封面
  */
+
+import { caseImg } from './images.js'
 
 export const casesData = [
   {

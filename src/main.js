@@ -4,6 +4,7 @@
 
 import { createIcons, Wrench, Terminal, Puzzle, Package, RefreshCw, Store } from 'lucide'
 import { casesData } from './data/cases.js'
+import { images, img, caseImg } from './data/images.js'
 import { initDiagnostic } from './diagnostic.js'
 
 // ================================================================
@@ -12,6 +13,28 @@ import { initDiagnostic } from './diagnostic.js'
 createIcons({
   icons: { Wrench, Terminal, Puzzle, Package, RefreshCw, Store },
 })
+
+// ================================================================
+//  0.1 中心化图片加载（data-img 属性 → 真实 URL）
+// ================================================================
+function applyImages() {
+  document.querySelectorAll('[data-img]').forEach(el => {
+    const key = el.dataset.img
+    const url = img(key)
+
+    if (!url) {
+      console.warn(`[图片] 未找到 key="${key}" 的图片配置`)
+      return
+    }
+
+    if (el.tagName === 'IMG') {
+      el.src = url
+    } else {
+      el.style.backgroundImage = `url('${url}')`
+    }
+  })
+  console.log(`[图片] 已加载 ${document.querySelectorAll('[data-img]').length} 处图片`)
+}
 
 // ================================================================
 //  1. 移动端汉堡菜单
@@ -113,7 +136,7 @@ function renderCases() {
           <div
             class="absolute inset-0 bg-cover bg-center transition-transform duration-700
                    group-hover:scale-105"
-            style="background-image: url('${c.image}');"
+            style="background-image: url('${caseImg(c.image)}');"
           ></div>
           <!-- 图片加载失败的渐变兜底 -->
           <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-black/60 -z-10"></div>
@@ -148,6 +171,7 @@ function renderCases() {
 
 // DOM 就绪后渲染
 function onReady() {
+  applyImages()
   renderCases()
   initDiagnostic()
   initContactForm()
