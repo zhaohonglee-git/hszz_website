@@ -4,8 +4,8 @@
  * 提交端点：修改下方 WEBHOOK_URL 为你自己的 API 地址
  */
 
-const WEBHOOK_URL = 'YOUR_API_ENDPOINT_HERE'
-// 示例：const WEBHOOK_URL = 'https://api.example.com/diagnostic'
+// 生产环境自动指向同域 API，本地开发可改为完整 URL
+const WEBHOOK_URL = '/api/diagnostic'
 
 // ---------- 状态 ----------
 let currentStep = 1
