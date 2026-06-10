@@ -189,7 +189,7 @@ if (document.readyState === 'loading') {
 // ================================================================
 //  5. 联系表单 — 提交逻辑
 // ================================================================
-const CONTACT_WEBHOOK = 'YOUR_CONTACT_API_ENDPOINT_HERE'
+const CONTACT_WEBHOOK = '/api/contact'
 
 function initContactForm() {
   const form       = document.getElementById('contact-form')
