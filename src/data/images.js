@@ -14,9 +14,9 @@
 
 export const images = {
   // ========== Hero 轮播背景（1920×1080）==========
-  'hero.slide1': 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1920&q=80',
-  'hero.slide2': 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=1920&q=80',
-  'hero.slide3': 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1920&q=80',
+  'hero.slide1': '/images/hero/Hero_01.jpg',
+  'hero.slide2': '/images/hero/Hero_02.jpg',
+  'hero.slide3': '/images/hero/Hero_03.jpg',
 
   // ========== 业务卡片头图（600×400）==========
   'service.maintenance':   '/images/services/service01.jpg',
