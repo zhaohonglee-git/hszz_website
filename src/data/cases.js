@@ -32,7 +32,7 @@ export const casesData = [
     id: 2,
     title: '食品包装线 ABB 高速分拣机器人调试',
     industry: '食品饮料',
-    image: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&h=500&fit=crop&q=80',
+    image: '/images/cases/case02.jpg',
     description:
       '完成 6 台 ABB IRB 460 高速分拣机器人的编程调试与节拍优化，单线产能提升 35%，实现全自动码垛与缠绕包装联动。',
   },
@@ -64,7 +64,7 @@ export const casesData = [
     id: 6,
     title: '精密铸造厂备品备件年度框架供应',
     industry: '金属加工',
-    image: 'https://images.unsplash.com/photo-1513828583688-c52646db42da?w=800&h=500&fit=crop&q=80',
+    image: '/images/cases/case06.jpg',
     description:
       '为某精密铸造企业建立关键备件安全库存体系，覆盖减速机、伺服电机、IO 模块等 200+ SKU，紧急交付周期由 7 天缩短至 48 小时。',
   },

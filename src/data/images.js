@@ -19,19 +19,19 @@ export const images = {
   'hero.slide3': 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1920&q=80',
 
   // ========== 业务卡片头图（600×400）==========
-  'service.maintenance':   'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop&q=80',
-  'service.programming':   'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=600&h=400&fit=crop&q=80',
-  'service.integration':   'https://images.unsplash.com/photo-1563770660941-20978e870e26?w=600&h=400&fit=crop&q=80',
-  'service.spareparts':    'https://images.unsplash.com/photo-1513828583688-c52646db42da?w=600&h=400&fit=crop&q=80',
-  'service.refurbishment': 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=600&h=400&fit=crop&q=80',
-  'service.sales':         'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=400&fit=crop&q=80',
+  'service.maintenance':   '/images/services/service01.jpg',
+  'service.programming':   '/images/services/service02.jpg',
+  'service.integration':   '/images/services/service03.jpg',
+  'service.spareparts':    '/images/services/service04.jpg',
+  'service.refurbishment': '/images/services/service05.jpg',
+  'service.sales':         '/images/services/service06.jpg',
 
   // ========== 案例默认封面（800×500）==========
   'case.default': 'https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=800&h=500&fit=crop&q=80',
 
   // ========== 微信二维码（400×400 PNG）==========
-  'qr.engineer1': 'https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://work.weixin.qq.com/contact/engineer-zhang',
-  'qr.engineer2': 'https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://work.weixin.qq.com/contact/engineer-li',
+  'qr.engineer1': '/images/qr/张工二维码名片.png',
+  'qr.engineer2': '/images/qr/胡工二维码名片.png',
 }
 
 /** 根据 key 获取图片 URL */
