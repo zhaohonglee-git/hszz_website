@@ -24,7 +24,7 @@ export const casesData = [
     id: 1,
     title: '某汽车零部件厂 KUKA 焊接线体年度维保',
     industry: '汽车制造',
-    image: 'https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=800&h=500&fit=crop&q=80',
+    image: '/images/cases/case01.jpg',
     description:
       '为某大型汽车零部件供应商的 12 台 KUKA 焊接机器人提供全年预防性维护，建立数字化维保档案，故障率降低 67%，线体 OEE 提升至 92%。',
   },
