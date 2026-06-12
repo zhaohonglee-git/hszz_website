@@ -129,9 +129,11 @@ app.use('/uploads', authMiddleware, express.static(path.join(__dirname, 'uploads
 // ---- 管理后台 ----
 app.get('/admin', (_req, res) => res.sendFile(path.join(__dirname, 'admin.html')))
 
-// ---- 生产：托管前端 ----
+// ---- 生产：托管前端静态文件 ----
 const distPath = path.join(__dirname, '..', 'dist')
-app.use(express.static(distPath))
+const pubPath = path.join(__dirname, '..', 'public')
+app.use(express.static(pubPath))   // 上传的案例图片等运行时资源
+app.use(express.static(distPath))  // 前端构建产物
 app.get('*', (_req, res) => res.sendFile(path.join(distPath, 'index.html')))
 
 // ---- 启动 ----
