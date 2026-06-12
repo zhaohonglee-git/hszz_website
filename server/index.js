@@ -58,7 +58,7 @@ app.post('/api/diagnostic', upload.array('files', 10), (req, res) => {
   }
 })
 
-app.post('/api/contact', (req, res) => {
+app.post('/api/contact', upload.none(), (req, res) => {
   try {
     const { name, phone, company, message } = req.body
     if (!name || !phone) return res.status(400).json({ error: '姓名和手机号为必填项' })
