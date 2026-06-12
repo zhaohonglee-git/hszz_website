@@ -70,7 +70,13 @@ const stmts = {
   `),
 }
 
-export function insertSubmission(data) { return stmts.insert.run(data) }
+export function insertSubmission(data) {
+  return stmts.insert.run({
+    type: '', brand: '', fault: '', name: '', phone: '',
+    company: '', description: '', message: '', files: '[]',
+    ...data,
+  })
+}
 export function getSubmission(id)     { return stmts.getById.get(id) }
 export function updateSubmission(id, data) { return stmts.update.run({ id, ...data }) }
 
