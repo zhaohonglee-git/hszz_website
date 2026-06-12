@@ -129,18 +129,29 @@ app.get('/api/admin/stats', authMiddleware, (_req, res) => res.json(getStats()))
 app.get('/api/admin/export', authMiddleware, (req, res) => {
   const { type, brand, fault, status, search } = req.query
   const { rows } = listSubmissions({ type, brand, fault, status, search, limit: 99999, offset: 0 })
+
+  const esc = (v) => `"${String(v || '').replace(/"/g, '""')}"`
   const h = ['ID','类型','品牌','故障','姓名','电话','公司','描述/留言','附件数','状态','提交时间']
   const csv = [h.join(',')]
+
   rows.forEach(r => {
     const files = JSON.parse(r.files || '[]')
-    csv.push([r.id, r.type==='diagnostic'?'诊断':'联系', r.brand||'', r.fault||'',
-      `"${(r.name||'').replace(/"/g,'""')}"`, r.phone||'',
-      `"${(r.company||'').replace(/"/g,'""')}"`,
-      `"${(r.description||r.message||'').replace(/"/g,'""')}"`,
-      files.length, r.status, r.created_at].join(','))
+    csv.push([
+      r.id,
+      esc(r.type === 'diagnostic' ? '诊断' : '联系'),
+      esc(r.brand), esc(r.fault),
+      esc(r.name), esc(r.phone),
+      esc(r.company),
+      esc(r.description || r.message),
+      files.length,
+      esc({new:'新提交',contacted:'已联系',processing:'处理中',completed:'已完成'}[r.status] || r.status),
+      esc(r.created_at),
+    ].join(','))
   })
+
+  const filename = encodeURIComponent(`客户数据_${new Date().toISOString().slice(0,10)}.csv`)
   res.setHeader('Content-Type', 'text/csv; charset=utf-8')
-  res.setHeader('Content-Disposition', `attachment; filename=客户数据_${new Date().toISOString().slice(0,10)}.csv`)
+  res.setHeader('Content-Disposition', `attachment; filename*=UTF-8''${filename}`)
   res.send('﻿' + csv.join('\n'))
 })
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
