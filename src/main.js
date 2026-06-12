@@ -119,7 +119,7 @@ let casesState = { industry: '' }
 
 function marqueeCard(c) {
   return `
-    <article class="shrink-0 w-[280px] sm:w-[340px] group relative bg-brand-dark rounded-2xl overflow-hidden
+    <article class="shrink-0 w-[320px] sm:w-[420px] group relative bg-brand-dark rounded-2xl overflow-hidden
            border border-white/5 hover:border-brand-blue/30 transition-all duration-300">
       <div class="relative aspect-[8/5] overflow-hidden">
         <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
