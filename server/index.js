@@ -124,7 +124,7 @@ app.patch('/api/admin/submissions/:id', authMiddleware, (req, res) => {
   res.json({ success: true })
 })
 app.get('/api/admin/stats', authMiddleware, (_req, res) => res.json(getStats()))
-app.use('/uploads', authMiddleware, express.static(path.join(__dirname, 'uploads')))
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 // ---- 管理后台 ----
 app.get('/admin', (_req, res) => res.sendFile(path.join(__dirname, 'admin.html')))
