@@ -62,8 +62,8 @@ app.post('/api/contact', upload.none(), (req, res) => {
   try {
     const { name, phone, company, message } = req.body
     if (!name || !phone) return res.status(400).json({ error: '姓名和手机号为必填项' })
-    insertSubmission({ type: 'contact', name, phone, company: company || '',
-      message: message || '', files: '[]' })
+    insertSubmission({ type: 'contact', brand: '', fault: '', description: '',
+      name, phone, company: company || '', message: message || '', files: '[]' })
     console.log(`[联系] ${name} ${phone} ${company || ''}`)
     res.json({ success: true, message: '留言已提交，我们将尽快与您联系' })
   } catch (err) {
