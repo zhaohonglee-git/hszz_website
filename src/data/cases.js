@@ -40,7 +40,7 @@ export const casesData = [
     id: 3,
     title: '3C 电子厂 FANUC 搬运工作站系统集成',
     industry: '3C电子',
-    image: 'https://images.unsplash.com/photo-1563770660941-20978e870e26?w=800&h=500&fit=crop&q=80',
+    image: '/images/cases/case03.jpg',
     description:
       '为手机玻璃盖板产线设计 FANUC M-10iA 搬运工作站，集成视觉定位与 PLC 联动，替代 8 名人工上下料，投资回收期仅 11 个月。',
   },
@@ -48,7 +48,7 @@ export const casesData = [
     id: 4,
     title: '工程机械喷涂机器人深度翻新再制造',
     industry: '工程机械',
-    image: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=800&h=500&fit=crop&q=80',
+    image: '/images/cases/case04.jpg',
     description:
       '对 4 台退役安川 Motoman 喷涂机器人进行深度翻新，更换减速机与管线包，恢复出厂精度并通过 72 小时老化测试，附带 1 年质保。',
   },
@@ -56,7 +56,7 @@ export const casesData = [
     id: 5,
     title: '新能源电池模组搬运与检测系统',
     industry: '新能源',
-    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=500&fit=crop&q=80',
+    image: '/images/cases/case05.jpg',
     description:
       '为锂电池模组产线设计 Epson 四轴机器人搬运系统，集成 MES 数据追溯与安全光幕，实现无人化转运，日均处理 12000 枚电芯。',
   },
