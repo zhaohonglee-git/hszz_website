@@ -7,3 +7,4 @@ dist/
 server/data.db*
 server/uploads/*
 !server/uploads/.gitkeep
+hszz.tar.gz
