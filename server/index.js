@@ -41,7 +41,7 @@ const caseUpload = multer({ storage: caseStorage, limits: { fileSize: 10 * 1024 
 
 // ---- 公共 API ----
 
-app.post('/api/diagnostic', upload.array('files', 10), (req, res) => {
+app.post('/api/diagnostic', upload.any(), (req, res) => {
   try {
     const { brand, fault, name, phone, description } = req.body
     if (!name || !phone) return res.status(400).json({ error: '姓名和手机号为必填项' })
