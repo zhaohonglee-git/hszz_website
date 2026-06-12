@@ -59,6 +59,7 @@
         <input id="f-search" type="text" placeholder="搜索姓名/电话/公司..." class="flex-1 min-w-[160px] text-sm rounded-lg border-gray-200 px-3 py-2 focus:ring-brand-blue"/>
         <button onclick="loadData()" class="px-3 py-2 text-xs font-medium rounded-lg bg-brand-blue text-white hover:bg-blue-700">查询</button>
         <button onclick="reset()" class="px-3 py-2 text-xs font-medium rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200">重置</button>
+        <button onclick="exportCSV()" class="px-3 py-2 text-xs font-medium rounded-lg bg-green-600 text-white hover:bg-green-700 ml-auto">📥 导出CSV</button>
       </div>
     </div>
     <!-- 表格 -->
@@ -208,6 +209,18 @@ async function saveDetail() {
   closeModal(); loadData(page)
 }
 function esc(s) { if (!s) return ''; const d = document.createElement('div'); d.textContent = s; return d.innerHTML }
+
+async function exportCSV() {
+  const params = new URLSearchParams()
+  const t = document.getElementById('f-type').value, s = document.getElementById('f-status').value
+  const b = document.getElementById('f-brand').value, kw = document.getElementById('f-search').value.trim()
+  if (t) params.set('type', t); if (s) params.set('status', s); if (b) params.set('brand', b); if (kw) params.set('search', kw)
+  const res = await fetch(`/api/admin/export?${params}`, { headers: { Authorization: `Bearer ${token}` } })
+  const blob = await res.blob()
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a'); a.href = url; a.download = `客户数据_${new Date().toISOString().slice(0,10)}.csv`
+  a.click(); URL.revokeObjectURL(url)
+}
 
 // ==================== Tab 切换 ====================
 document.querySelectorAll('.admin-tab').forEach(btn => {

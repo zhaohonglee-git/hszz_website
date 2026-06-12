@@ -124,6 +124,25 @@ app.patch('/api/admin/submissions/:id', authMiddleware, (req, res) => {
   res.json({ success: true })
 })
 app.get('/api/admin/stats', authMiddleware, (_req, res) => res.json(getStats()))
+
+// CSV 导出
+app.get('/api/admin/export', authMiddleware, (req, res) => {
+  const { type, brand, fault, status, search } = req.query
+  const { rows } = listSubmissions({ type, brand, fault, status, search, limit: 99999, offset: 0 })
+  const h = ['ID','类型','品牌','故障','姓名','电话','公司','描述/留言','附件数','状态','提交时间']
+  const csv = [h.join(',')]
+  rows.forEach(r => {
+    const files = JSON.parse(r.files || '[]')
+    csv.push([r.id, r.type==='diagnostic'?'诊断':'联系', r.brand||'', r.fault||'',
+      `"${(r.name||'').replace(/"/g,'""')}"`, r.phone||'',
+      `"${(r.company||'').replace(/"/g,'""')}"`,
+      `"${(r.description||r.message||'').replace(/"/g,'""')}"`,
+      files.length, r.status, r.created_at].join(','))
+  })
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8')
+  res.setHeader('Content-Disposition', `attachment; filename=客户数据_${new Date().toISOString().slice(0,10)}.csv`)
+  res.send('﻿' + csv.join('\n'))
+})
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 // ---- 管理后台 ----
