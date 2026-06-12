@@ -132,7 +132,7 @@ function renderCases() {
         style="animation-delay: ${delay}; animation-fill-mode: forwards;"
       >
         <!-- 封面图区域 -->
-        <div class="relative h-52 sm:h-56 overflow-hidden">
+        <div class="relative aspect-[8/5] overflow-hidden">
           <div
             class="absolute inset-0 bg-cover bg-center transition-transform duration-700
                    group-hover:scale-105"
