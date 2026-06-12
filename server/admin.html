@@ -40,6 +40,14 @@
     </div>
   </header>
   <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+    <!-- Tab 导航 -->
+    <div class="flex gap-1 mb-6 bg-gray-100 rounded-xl p-1 w-fit">
+      <button class="admin-tab active px-4 py-2 rounded-lg text-sm font-medium bg-white text-gray-900 shadow-sm transition-all" data-tab="submissions">📋 客户管理</button>
+      <button class="admin-tab px-4 py-2 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-700 transition-all" data-tab="cases">📁 案例管理</button>
+    </div>
+
+    <!-- 客户管理 Tab -->
+    <div id="tab-submissions">
     <!-- 统计卡片 -->
     <div id="stats-row" class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6"></div>
     <!-- 筛选 -->
@@ -61,6 +69,37 @@
       <div id="empty" class="hidden text-center py-12 text-gray-400 text-sm">暂无数据</div>
       <div id="pager" class="flex items-center justify-between px-4 py-3 border-t border-gray-100 bg-gray-50/50"></div>
     </div>
+    </div><!-- /tab-submissions -->
+
+    <!-- 案例管理 Tab -->
+    <div id="tab-cases" class="hidden">
+      <div class="flex items-center justify-between mb-4">
+        <span class="text-sm text-gray-500" id="cases-info"></span>
+        <button onclick="openCaseForm()" class="px-4 py-2 rounded-lg bg-brand-blue text-white text-sm font-medium hover:bg-blue-700">+ 新增案例</button>
+      </div>
+      <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm"><thead><tr class="bg-gray-50 text-left text-xs font-semibold text-gray-500 uppercase"><th class="px-4 py-3 w-16">封面</th><th class="px-4 py-3">标题</th><th class="px-4 py-3">行业</th><th class="px-4 py-3">时间</th><th class="px-4 py-3 w-24">操作</th></tr></thead><tbody id="cases-tbody" class="divide-y divide-gray-100"></tbody></table>
+        </div>
+        <div id="cases-empty" class="hidden text-center py-12 text-gray-400 text-sm">暂无案例</div>
+      </div>
+
+      <!-- 案例表单弹窗 -->
+      <div id="case-form-modal" class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4" onclick="if(event.target===this)closeCaseForm()">
+        <div class="bg-white rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl">
+          <div class="sticky top-0 bg-white border-b px-6 py-4 flex items-center justify-between rounded-t-2xl"><h3 class="text-base font-bold" id="case-form-title">新增案例</h3><button onclick="closeCaseForm()" class="text-gray-400 hover:text-gray-600 text-lg">✕</button></div>
+          <form id="case-form" class="p-6 space-y-4">
+            <input type="hidden" id="case-id"/>
+            <div><label class="text-xs text-gray-400 block mb-1">标题 <span class="text-red-400">*</span></label><input id="case-title" required class="w-full text-sm rounded-lg border-gray-200 px-3 py-2 focus:ring-brand-blue"/></div>
+            <div><label class="text-xs text-gray-400 block mb-1">行业 <span class="text-red-400">*</span></label><input id="case-industry" required placeholder="如：汽车制造、新能源..." class="w-full text-sm rounded-lg border-gray-200 px-3 py-2 focus:ring-brand-blue"/></div>
+            <div><label class="text-xs text-gray-400 block mb-1">描述</label><textarea id="case-desc" rows="3" class="w-full text-sm rounded-lg border-gray-200 px-3 py-2 focus:ring-brand-blue resize-none"></textarea></div>
+            <div><label class="text-xs text-gray-400 block mb-1">封面图片 (8:5)</label><input type="file" id="case-image-file" accept="image/*" class="w-full text-sm"/><p id="case-image-path" class="text-xs text-gray-400 mt-1 hidden"></p></div>
+            <button type="submit" class="w-full py-2.5 rounded-xl bg-brand-blue text-white text-sm font-semibold hover:bg-blue-700">保存</button>
+          </form>
+        </div>
+      </div>
+    </div><!-- /tab-cases -->
+
   </main>
 </div>
 
@@ -169,6 +208,76 @@ async function saveDetail() {
   closeModal(); loadData(page)
 }
 function esc(s) { if (!s) return ''; const d = document.createElement('div'); d.textContent = s; return d.innerHTML }
+
+// ==================== Tab 切换 ====================
+document.querySelectorAll('.admin-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.admin-tab').forEach(b => { b.classList.remove('active','bg-white','text-gray-900','shadow-sm'); b.classList.add('text-gray-500') })
+    btn.classList.add('active','bg-white','text-gray-900','shadow-sm'); btn.classList.remove('text-gray-500')
+    document.getElementById('tab-submissions').classList.toggle('hidden', btn.dataset.tab !== 'submissions')
+    document.getElementById('tab-cases').classList.toggle('hidden', btn.dataset.tab !== 'cases')
+    if (btn.dataset.tab === 'cases') loadCasesList()
+  })
+})
+
+// ==================== 案例管理 ====================
+async function loadCasesList() {
+  const data = await api('/api/cases?limit=100')
+  const tbody = document.getElementById('cases-tbody'), empty = document.getElementById('cases-empty')
+  document.getElementById('cases-info').textContent = `共 ${data.total} 个案例`
+  if (!data.rows.length) { tbody.innerHTML = ''; empty.classList.remove('hidden'); return }
+  empty.classList.add('hidden')
+  tbody.innerHTML = data.rows.map(r => `<tr>
+    <td class="px-4 py-3"><img src="${r.image}" class="w-12 h-7.5 rounded object-cover bg-gray-100" onerror="this.style.display='none'"/></td>
+    <td class="px-4 py-3 font-medium text-gray-900 text-sm">${esc(r.title)}</td>
+    <td class="px-4 py-3"><span class="inline-flex px-2 py-0.5 rounded-full text-xs bg-blue-50 text-blue-700">${esc(r.industry)}</span></td>
+    <td class="px-4 py-3 text-xs text-gray-400">${r.created_at}</td>
+    <td class="px-4 py-3 flex gap-1">
+      <button onclick="editCase(${r.id})" class="px-2 py-1 text-xs rounded bg-gray-100 hover:bg-gray-200">编辑</button>
+      <button onclick="deleteCaseItem(${r.id},'${esc(r.title)}')" class="px-2 py-1 text-xs rounded bg-red-50 text-red-600 hover:bg-red-100">删除</button>
+    </td></tr>`).join('')
+}
+
+function openCaseForm(id) { document.getElementById('case-form-modal').classList.remove('hidden'); if (!id) { document.getElementById('case-form').reset(); document.getElementById('case-id').value=''; document.getElementById('case-form-title').textContent='新增案例' } }
+function closeCaseForm() { document.getElementById('case-form-modal').classList.add('hidden') }
+
+async function editCase(id) {
+  openCaseForm(id)
+  const data = await api('/api/cases?limit=100')
+  const c = data.rows.find(r => r.id === id)
+  if (!c) return
+  document.getElementById('case-id').value = c.id
+  document.getElementById('case-title').value = c.title
+  document.getElementById('case-industry').value = c.industry
+  document.getElementById('case-desc').value = c.description
+  document.getElementById('case-image-path').textContent = c.image
+  document.getElementById('case-image-path').classList.remove('hidden')
+  document.getElementById('case-form-title').textContent = '编辑案例'
+}
+
+async function deleteCaseItem(id, title) {
+  if (!confirm(`确定删除「${title}」？`)) return
+  await api(`/api/admin/cases/${id}`, { method: 'DELETE' })
+  loadCasesList()
+}
+
+document.getElementById('case-form').addEventListener('submit', async e => {
+  e.preventDefault()
+  const id = document.getElementById('case-id').value
+  const fd = new FormData()
+  fd.set('title', document.getElementById('case-title').value)
+  fd.set('industry', document.getElementById('case-industry').value)
+  fd.set('description', document.getElementById('case-desc').value)
+  const file = document.getElementById('case-image-file').files[0]
+  if (file) fd.set('image', file)
+  else fd.set('image', document.getElementById('case-image-path').textContent || '')
+
+  const url = id ? `/api/admin/cases/${id}` : '/api/admin/cases'
+  const method = id ? 'PUT' : 'POST'
+  await api(url, { method, body: fd, headers: {} }) // no Content-Type for FormData
+  closeCaseForm()
+  loadCasesList()
+})
 </script>
 </body>
 </html>

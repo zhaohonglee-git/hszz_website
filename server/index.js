@@ -8,7 +8,7 @@ import cors from 'cors'
 import multer from 'multer'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import { insertSubmission, listSubmissions, getSubmission, updateSubmission, getStats } from './db.js'
+import { insertSubmission, listSubmissions, getSubmission, updateSubmission, getStats, insertCase, updateCase, deleteCase, listCases } from './db.js'
 import { authMiddleware, loginHandler } from './auth.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -27,6 +27,17 @@ const storage = multer.diskStorage({
   },
 })
 const upload = multer({ storage, limits: { fileSize: 50 * 1024 * 1024 } })
+
+// 案例图片存储到 public/images/cases/
+const caseStorage = multer.diskStorage({
+  destination: path.join(__dirname, '..', 'public', 'images', 'cases'),
+  filename: (_req, file, cb) => {
+    const ts = Date.now()
+    const safe = file.originalname.replace(/[^a-zA-Z0-9._\-一-鿿]/g, '_')
+    cb(null, `case_${ts}_${safe}`)
+  },
+})
+const caseUpload = multer({ storage: caseStorage, limits: { fileSize: 10 * 1024 * 1024 } })
 
 // ---- 公共 API ----
 
@@ -61,7 +72,42 @@ app.post('/api/contact', (req, res) => {
   }
 })
 
+// ---- 案例 API（公开）----
+app.get('/api/cases', (req, res) => {
+  const { industry, limit, offset } = req.query
+  res.json(listCases({ industry, limit: parseInt(limit)||9, offset: parseInt(offset)||0 }))
+})
+
 // ---- 管理 API（需鉴权）----
+
+// 案例管理
+app.post('/api/admin/cases', authMiddleware, caseUpload.single('image'), (req, res) => {
+  try {
+    const { title, industry, description } = req.body
+    if (!title || !industry) return res.status(400).json({ error: '标题和行业为必填' })
+    const image = req.file ? '/images/cases/' + req.file.filename : (req.body.image || '')
+    insertCase({ title, industry, image, description: description || '' })
+    res.json({ success: true })
+  } catch (err) { res.status(500).json({ error: err.message }) }
+})
+
+app.put('/api/admin/cases/:id', authMiddleware, caseUpload.single('image'), (req, res) => {
+  try {
+    const { title, industry, description } = req.body
+    const data = { title, industry, description: description || '' }
+    if (req.file) data.image = '/images/cases/' + req.file.filename
+    else if (req.body.image) data.image = req.body.image
+    updateCase(parseInt(req.params.id), data)
+    res.json({ success: true })
+  } catch (err) { res.status(500).json({ error: err.message }) }
+})
+
+app.delete('/api/admin/cases/:id', authMiddleware, (req, res) => {
+  deleteCase(parseInt(req.params.id))
+  res.json({ success: true })
+})
+
+// 表单管理
 
 app.post('/api/admin/login', loginHandler)
 app.get('/api/admin/submissions', authMiddleware, (req, res) => {

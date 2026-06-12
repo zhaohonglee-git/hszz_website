@@ -3,8 +3,7 @@
  */
 
 import { createIcons, Wrench, Terminal, Puzzle, Package, RefreshCw, Store } from 'lucide'
-import { casesData } from './data/cases.js'
-import { images, img, caseImg } from './data/images.js'
+import { images, img } from './data/images.js'
 import { initDiagnostic } from './diagnostic.js'
 
 // ================================================================
@@ -113,66 +112,100 @@ function updateActiveLink() {
 window.addEventListener('scroll', updateActiveLink, { passive: true })
 
 // ================================================================
-//  4. 典型案例 — 动态渲染
+//  4. 典型案例 — 动态加载 + 筛选 + 分页
 // ================================================================
-function renderCases() {
-  const container = document.getElementById('cases-grid')
-  if (!container) return
+let casesState = { industry: '', offset: 0, total: 0, loading: false }
 
-  const cards = casesData.map((c, i) => {
-    // 每张卡片延迟 100ms 依次出现
-    const delay = `${i * 100}ms`
+function caseCard(c, i) {
+  const delay = `${(i % 9) * 80}ms`
+  return `
+    <article class="group relative bg-brand-dark rounded-2xl overflow-hidden
+           border border-white/5 hover:border-brand-blue/30
+           transition-all duration-500 opacity-0 animate-slide-up"
+      style="animation-delay: ${delay}; animation-fill-mode: forwards;">
+      <div class="relative aspect-[8/5] overflow-hidden">
+        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+             style="background-image: url('${c.image}');"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-black/60 -z-10"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
+        <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-brand-blue/90 text-white text-xs font-medium backdrop-blur-sm">${c.industry}</span>
+      </div>
+      <div class="p-5 sm:p-6">
+        <h3 class="text-base sm:text-lg font-bold text-white leading-snug group-hover:text-brand-blue transition-colors duration-200">${c.title}</h3>
+        <p class="mt-3 text-sm text-brand-muted leading-relaxed line-clamp-3">${c.description}</p>
+      </div>
+    </article>`
+}
 
-    return `
-      <article
-        class="group relative bg-brand-dark rounded-2xl overflow-hidden
-               border border-white/5 hover:border-brand-blue/30
-               transition-all duration-500
-               opacity-0 animate-slide-up"
-        style="animation-delay: ${delay}; animation-fill-mode: forwards;"
-      >
-        <!-- 封面图区域 -->
-        <div class="relative aspect-[8/5] overflow-hidden">
-          <div
-            class="absolute inset-0 bg-cover bg-center transition-transform duration-700
-                   group-hover:scale-105"
-            style="background-image: url('${caseImg(c.image)}');"
-          ></div>
-          <!-- 图片加载失败的渐变兜底 -->
-          <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-black/60 -z-10"></div>
-          <!-- 悬停渐变遮罩 -->
-          <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-transparent to-transparent
-                      opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
+async function loadCases(reset = false) {
+  const grid = document.getElementById('cases-grid')
+  const more = document.getElementById('cases-more')
+  const count = document.getElementById('cases-count')
+  const btn = document.getElementById('load-more-btn')
+  if (!grid || casesState.loading) return
 
-          <!-- 行业标签 -->
-          <span class="absolute top-4 left-4 px-3 py-1 rounded-full
-                       bg-brand-blue/90 text-white text-xs font-medium
-                       backdrop-blur-sm">
-            ${c.industry}
-          </span>
-        </div>
+  if (reset) { casesState.offset = 0; grid.innerHTML = '' }
+  casesState.loading = true
+  if (btn) btn.textContent = '加载中...'
 
-        <!-- 文字内容 -->
-        <div class="p-5 sm:p-6">
-          <h3 class="text-base sm:text-lg font-bold text-white leading-snug
-                     group-hover:text-brand-blue transition-colors duration-200">
-            ${c.title}
-          </h3>
-          <p class="mt-3 text-sm text-brand-muted leading-relaxed line-clamp-3">
-            ${c.description}
-          </p>
-        </div>
-      </article>
-    `
-  }).join('')
+  try {
+    const params = new URLSearchParams({ limit: '9', offset: String(casesState.offset) })
+    if (casesState.industry) params.set('industry', casesState.industry)
+    const data = await fetch(`/api/cases?${params}`).then(r => r.json())
 
-  container.innerHTML = cards
+    grid.insertAdjacentHTML('beforeend', data.rows.map((c, i) => caseCard(c, casesState.offset + i)).join(''))
+    casesState.offset += data.rows.length
+    casesState.total = data.total
+
+    if (casesState.offset < data.total) {
+      more.classList.remove('hidden')
+      count.textContent = `已显示 ${casesState.offset} / 共 ${data.total} 个案例`
+    } else {
+      more.classList.add('hidden')
+    }
+  } catch (err) {
+    console.error('[案例] 加载失败:', err)
+  } finally {
+    casesState.loading = false
+    if (btn) btn.textContent = '加载更多案例'
+  }
+}
+
+async function initCases() {
+  // 加载行业列表
+  try {
+    const data = await fetch('/api/cases?limit=1').then(r => r.json())
+    const filters = document.getElementById('cases-filters')
+    if (filters && data.industries.length) {
+      const btns = data.industries.map(ind =>
+        `<button class="case-filter px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-white/10 text-brand-muted hover:bg-white/20 hover:text-white transition-all" data-industry="${ind}">${ind}</button>`
+      ).join('')
+      filters.insertAdjacentHTML('beforeend', btns)
+
+      // 筛选点击
+      filters.querySelectorAll('.case-filter').forEach(btn => {
+        btn.addEventListener('click', () => {
+          filters.querySelectorAll('.case-filter').forEach(b => { b.classList.remove('active','bg-brand-blue','text-white'); b.classList.add('bg-white/10','text-brand-muted') })
+          btn.classList.add('active','bg-brand-blue','text-white')
+          btn.classList.remove('bg-white/10','text-brand-muted')
+          casesState.industry = btn.dataset.industry
+          loadCases(true)
+        })
+      })
+    }
+  } catch (_) {}
+
+  // 加载更多
+  document.getElementById('load-more-btn')?.addEventListener('click', () => loadCases(false))
+
+  // 初始加载
+  loadCases(true)
 }
 
 // DOM 就绪后渲染
 function onReady() {
   applyImages()
-  renderCases()
+  initCases()
   initDiagnostic()
   initContactForm()
   initHeroCarousel()
