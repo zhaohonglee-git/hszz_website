@@ -1,11 +1,10 @@
 # ============================================================
-# 华晟智造 — Docker 多阶段构建（国内镜像源）
+# 华晟智造 — Docker 多阶段构建（全国内源）
 # ============================================================
 
 # ---------- 阶段 1：构建前端 ----------
 FROM node:22-alpine AS frontend-builder
 
-# Alpine + npm 国内镜像源
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
     && npm config set registry https://registry.npmmirror.com
 
@@ -19,10 +18,12 @@ RUN npm run build
 FROM node:22-alpine
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
-    && npm config set registry https://registry.npmmirror.com
+    && npm config set registry https://registry.npmmirror.com \
+    && apk add --no-cache python3 make g++
 
 WORKDIR /app
 
+# 安装后端依赖（better-sqlite3 可能需要本地编译）
 COPY server/package*.json ./server/
 RUN cd server && npm ci --omit=dev
 
