@@ -129,7 +129,8 @@ function marqueeCard(c) {
         <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-brand-blue/90 text-white text-xs font-medium backdrop-blur-sm">${c.industry}</span>
       </div>
       <div class="p-4 sm:p-5">
-        <h3 class="text-sm sm:text-base font-bold text-white leading-snug group-hover:text-brand-blue transition-colors duration-200 line-clamp-2">${c.title}</h3>
+        <h3 class="text-sm sm:text-base font-bold text-white leading-snug group-hover:text-brand-blue transition-colors duration-200 line-clamp-1">${c.title}</h3>
+        <p class="mt-2 text-xs sm:text-sm text-brand-muted leading-relaxed line-clamp-2">${c.description}</p>
       </div>
     </article>`
 }
