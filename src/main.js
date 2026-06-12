@@ -4,6 +4,7 @@
 
 import { createIcons, Wrench, Terminal, Puzzle, Package, RefreshCw, Store } from 'lucide'
 import { images, img } from './data/images.js'
+import { casesData } from './data/cases.js'
 import { initDiagnostic } from './diagnostic.js'
 
 // ================================================================
@@ -151,7 +152,9 @@ async function loadCases(reset = false) {
   try {
     const params = new URLSearchParams({ limit: '9', offset: String(casesState.offset) })
     if (casesState.industry) params.set('industry', casesState.industry)
-    const data = await fetch(`/api/cases?${params}`).then(r => r.json())
+    const resp = await fetch(`/api/cases?${params}`)
+    if (!resp.ok) throw new Error('API unavailable')
+    const data = await resp.json()
 
     grid.insertAdjacentHTML('beforeend', data.rows.map((c, i) => caseCard(c, casesState.offset + i)).join(''))
     casesState.offset += data.rows.length
@@ -164,7 +167,13 @@ async function loadCases(reset = false) {
       more.classList.add('hidden')
     }
   } catch (err) {
-    console.error('[案例] 加载失败:', err)
+    // API 不可用时，降级使用静态数据
+    console.warn('[案例] API不可用，使用静态数据')
+    let filtered = casesState.industry ? casesData.filter(c => c.industry === casesState.industry) : casesData
+    grid.insertAdjacentHTML('beforeend', filtered.map((c, i) => caseCard(c, i)).join(''))
+    casesState.total = filtered.length
+    casesState.offset = filtered.length
+    more.classList.add('hidden')
   } finally {
     casesState.loading = false
     if (btn) btn.textContent = '加载更多案例'
@@ -172,33 +181,33 @@ async function loadCases(reset = false) {
 }
 
 async function initCases() {
-  // 加载行业列表
+  // 加载行业列表（优先 API，失败则用静态数据）
+  let industries = []
   try {
-    const data = await fetch('/api/cases?limit=1').then(r => r.json())
-    const filters = document.getElementById('cases-filters')
-    if (filters && data.industries.length) {
-      const btns = data.industries.map(ind =>
-        `<button class="case-filter px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-white/10 text-brand-muted hover:bg-white/20 hover:text-white transition-all" data-industry="${ind}">${ind}</button>`
-      ).join('')
-      filters.insertAdjacentHTML('beforeend', btns)
-
-      // 筛选点击
-      filters.querySelectorAll('.case-filter').forEach(btn => {
-        btn.addEventListener('click', () => {
-          filters.querySelectorAll('.case-filter').forEach(b => { b.classList.remove('active','bg-brand-blue','text-white'); b.classList.add('bg-white/10','text-brand-muted') })
-          btn.classList.add('active','bg-brand-blue','text-white')
-          btn.classList.remove('bg-white/10','text-brand-muted')
-          casesState.industry = btn.dataset.industry
-          loadCases(true)
-        })
-      })
-    }
+    const resp = await fetch('/api/cases?limit=1')
+    if (resp.ok) industries = (await resp.json()).industries
   } catch (_) {}
+  if (!industries.length) industries = [...new Set(casesData.map(c => c.industry))]
 
-  // 加载更多
+  const filters = document.getElementById('cases-filters')
+  if (filters && industries.length) {
+    const btns = industries.map(ind =>
+      `<button class="case-filter px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-white/10 text-brand-muted hover:bg-white/20 hover:text-white transition-all" data-industry="${ind}">${ind}</button>`
+    ).join('')
+    filters.insertAdjacentHTML('beforeend', btns)
+
+    filters.querySelectorAll('.case-filter').forEach(btn => {
+      btn.addEventListener('click', () => {
+        filters.querySelectorAll('.case-filter').forEach(b => { b.classList.remove('active','bg-brand-blue','text-white'); b.classList.add('bg-white/10','text-brand-muted') })
+        btn.classList.add('active','bg-brand-blue','text-white')
+        btn.classList.remove('bg-white/10','text-brand-muted')
+        casesState.industry = btn.dataset.industry
+        loadCases(true)
+      })
+    })
+  }
+
   document.getElementById('load-more-btn')?.addEventListener('click', () => loadCases(false))
-
-  // 初始加载
   loadCases(true)
 }
 
