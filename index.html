@@ -533,21 +533,21 @@
       </div>
 
       <!-- 行业筛选标签 -->
-      <div class="flex flex-wrap items-center justify-center gap-2 mb-8" id="cases-filters">
+      <div class="flex flex-wrap items-center justify-center gap-2 mb-10" id="cases-filters">
         <button class="case-filter active px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-brand-blue text-white transition-all" data-industry="">全部</button>
       </div>
+    </div>
 
-      <!-- 案例卡片 Grid：mobile 1列 → md 2列 → lg 3列 -->
-      <div id="cases-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"></div>
-
-      <!-- 加载更多 -->
-      <div id="cases-more" class="mt-10 text-center hidden">
-        <button id="load-more-btn" class="btn-secondary !text-sm">
-          加载更多案例
-          <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-        </button>
-        <p id="cases-count" class="text-xs text-brand-muted mt-3"></p>
-      </div>
+    <!-- 双轨无限滚动容器（全宽）-->
+    <div class="relative overflow-hidden" id="cases-marquee">
+      <!-- 轨道 1：向左滚动 -->
+      <div class="cases-track" id="track-1"></div>
+      <!-- 轨道 2：向右滚动 -->
+      <div class="cases-track reverse mt-4" id="track-2"></div>
+      <!-- 两侧渐变遮罩 -->
+      <div class="absolute left-0 top-0 bottom-0 w-16 sm:w-32 z-10 pointer-events-none" style="background:linear-gradient(to right,#0D1117,transparent)"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-16 sm:w-32 z-10 pointer-events-none" style="background:linear-gradient(to left,#0D1117,transparent)"></div>
+    </div>
 
     </div>
   </section>

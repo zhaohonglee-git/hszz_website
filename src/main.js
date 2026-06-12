@@ -113,83 +113,56 @@ function updateActiveLink() {
 window.addEventListener('scroll', updateActiveLink, { passive: true })
 
 // ================================================================
-//  4. 典型案例 — 动态加载 + 筛选 + 分页
+//  4. 典型案例 — 双轨无限滚动
 // ================================================================
-let casesState = { industry: '', offset: 0, total: 0, loading: false }
+let casesState = { industry: '' }
 
-function caseCard(c, i) {
-  const delay = `${(i % 9) * 80}ms`
+function marqueeCard(c) {
   return `
-    <article class="group relative bg-brand-dark rounded-2xl overflow-hidden
-           border border-white/5 hover:border-brand-blue/30
-           transition-all duration-500 opacity-0 animate-slide-up"
-      style="animation-delay: ${delay}; animation-fill-mode: forwards;">
+    <article class="shrink-0 w-[280px] sm:w-[340px] group relative bg-brand-dark rounded-2xl overflow-hidden
+           border border-white/5 hover:border-brand-blue/30 transition-all duration-300">
       <div class="relative aspect-[8/5] overflow-hidden">
         <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
              style="background-image: url('${c.image}');"></div>
         <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-black/60 -z-10"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
-        <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-brand-blue/90 text-white text-xs font-medium backdrop-blur-sm">${c.industry}</span>
+        <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-brand-blue/90 text-white text-xs font-medium backdrop-blur-sm">${c.industry}</span>
       </div>
-      <div class="p-5 sm:p-6">
-        <h3 class="text-base sm:text-lg font-bold text-white leading-snug group-hover:text-brand-blue transition-colors duration-200">${c.title}</h3>
-        <p class="mt-3 text-sm text-brand-muted leading-relaxed line-clamp-3">${c.description}</p>
+      <div class="p-4 sm:p-5">
+        <h3 class="text-sm sm:text-base font-bold text-white leading-snug group-hover:text-brand-blue transition-colors duration-200 line-clamp-2">${c.title}</h3>
       </div>
     </article>`
 }
 
-async function loadCases(reset = false) {
-  const grid = document.getElementById('cases-grid')
-  const more = document.getElementById('cases-more')
-  const count = document.getElementById('cases-count')
-  const btn = document.getElementById('load-more-btn')
-  if (!grid || casesState.loading) return
-
-  if (reset) { casesState.offset = 0; grid.innerHTML = '' }
-  casesState.loading = true
-  if (btn) btn.textContent = '加载中...'
-
-  try {
-    const params = new URLSearchParams({ limit: '9', offset: String(casesState.offset) })
-    if (casesState.industry) params.set('industry', casesState.industry)
-    const resp = await fetch(`/api/cases?${params}`)
-    if (!resp.ok) throw new Error('API unavailable')
-    const data = await resp.json()
-
-    grid.insertAdjacentHTML('beforeend', data.rows.map((c, i) => caseCard(c, casesState.offset + i)).join(''))
-    casesState.offset += data.rows.length
-    casesState.total = data.total
-
-    if (casesState.offset < data.total) {
-      more.classList.remove('hidden')
-      count.textContent = `已显示 ${casesState.offset} / 共 ${data.total} 个案例`
-    } else {
-      more.classList.add('hidden')
-    }
-  } catch (err) {
-    // API 不可用时，降级使用静态数据
-    console.warn('[案例] API不可用，使用静态数据')
-    let filtered = casesState.industry ? casesData.filter(c => c.industry === casesState.industry) : casesData
-    grid.insertAdjacentHTML('beforeend', filtered.map((c, i) => caseCard(c, i)).join(''))
-    casesState.total = filtered.length
-    casesState.offset = filtered.length
-    more.classList.add('hidden')
-  } finally {
-    casesState.loading = false
-    if (btn) btn.textContent = '加载更多案例'
-  }
-}
-
 async function initCases() {
-  // 加载行业列表（优先 API，失败则用静态数据）
-  let industries = []
+  // 加载数据（优先 API，失败则用静态）
+  let cases = []
   try {
-    const resp = await fetch('/api/cases?limit=1')
-    if (resp.ok) industries = (await resp.json()).industries
+    const resp = await fetch('/api/cases?limit=100')
+    if (resp.ok) cases = (await resp.json()).rows
   } catch (_) {}
-  if (!industries.length) industries = [...new Set(casesData.map(c => c.industry))]
+  if (!cases.length) cases = casesData
 
+  // 行业列表
+  const industries = [...new Set(cases.map(c => c.industry))]
   const filters = document.getElementById('cases-filters')
+
+  function renderMarquee(data) {
+    // 数据不足时复制一份确保滚动流畅
+    const doubled = data.length < 4 ? [...data, ...data] : data
+    const cards = doubled.map(c => marqueeCard(c)).join('')
+    // 渲染两份实现无缝循环
+    document.getElementById('track-1').innerHTML = cards + cards
+    // 轨道2用反转顺序
+    const reversed = [...doubled].reverse()
+    const cards2 = reversed.map(c => marqueeCard(c)).join('')
+    document.getElementById('track-2').innerHTML = cards2 + cards2
+  }
+
+  // 初始渲染
+  renderMarquee(cases)
+
+  // 筛选
   if (filters && industries.length) {
     const btns = industries.map(ind =>
       `<button class="case-filter px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-white/10 text-brand-muted hover:bg-white/20 hover:text-white transition-all" data-industry="${ind}">${ind}</button>`
@@ -202,13 +175,11 @@ async function initCases() {
         btn.classList.add('active','bg-brand-blue','text-white')
         btn.classList.remove('bg-white/10','text-brand-muted')
         casesState.industry = btn.dataset.industry
-        loadCases(true)
+        const filtered = casesState.industry ? cases.filter(c => c.industry === casesState.industry) : cases
+        renderMarquee(filtered.length ? filtered : cases)
       })
     })
   }
-
-  document.getElementById('load-more-btn')?.addEventListener('click', () => loadCases(false))
-  loadCases(true)
 }
 
 // DOM 就绪后渲染
