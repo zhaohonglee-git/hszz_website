@@ -1,0 +1,128 @@
+[
+  {
+    "title": "理想汽车产线FANUC保养",
+    "industry": "维护保养",
+    "image": "/images/cases/case_1781246649628_______5.jpg",
+    "description": "汽车产线FANUC机器人维保，更换润滑脂、编码器电池，本体及柜内整理与清洁。",
+    "sort_order": 0
+  },
+  {
+    "title": "某汽车行业客户伺服电机更换",
+    "industry": "零部件更换",
+    "image": "/images/cases/case_1781248363925_______6.jpg",
+    "description": "埃斯顿大负载机器人三轴伺服电机更换，补充润滑脂、零点恢复。",
+    "sort_order": 0
+  },
+  {
+    "title": "河南新能源客户机器人减速器更换",
+    "industry": "零部件更换",
+    "image": "/images/cases/case_1781248475736______________20260612145341_1172_7.jpg",
+    "description": "埃斯顿大负载机器人五轴减速器更换服务。",
+    "sort_order": 0
+  },
+  {
+    "title": "国内某汽车行业用户机器人五轴维修",
+    "industry": "零部件更换",
+    "image": "/images/cases/case_1781248643361______________20260612145358_1173_7.jpg",
+    "description": "埃斯顿机器人五轴漏油故障排查，油封及转接轴相关部件更换，机器人零点恢复。",
+    "sort_order": 0
+  },
+  {
+    "title": "轨道交通行业机器人程序调试",
+    "industry": "程序调试",
+    "image": "/images/cases/case_1781248802979______________2026-06-12_143638_229.jpg",
+    "description": "铸造生产线FANUC机器人，视觉引导搬运系统，故障维修、保养换油换电池、程序恢复。",
+    "sort_order": 0
+  },
+  {
+    "title": "天津某汽车行业客户喷涂打码机器人调试",
+    "industry": "程序调试",
+    "image": "/images/cases/case_1781248914729______________2026-06-12_143645_677.jpg",
+    "description": "双机器人脱模剂喷涂工艺调试，带编码器同步功能，双机协作控制。",
+    "sort_order": 0
+  },
+  {
+    "title": "天津某3C行业客户机器人掉零点故障排查",
+    "industry": "故障排查",
+    "image": "/images/cases/case_1781249016585______________2026-06-12_143651_269.jpg",
+    "description": "3C行业搬运机器人，运行过程中零点丢失故障排查，更换原厂电池。",
+    "sort_order": 0
+  },
+  {
+    "title": "河南某冶金行业搬运机器人维修",
+    "industry": "故障排查",
+    "image": "/images/cases/case_1781249106420_2f2f96ce80c00c3c2b843afee353568d.jpg",
+    "description": "埃斯顿搬运机器人，伺服驱动器无响应故障，更换原厂部件后解决。",
+    "sort_order": 0
+  },
+  {
+    "title": "山东临沂客户伺服驱动固件升级",
+    "industry": "故障排查",
+    "image": "/images/cases/case_1781249189654_______2.jpg",
+    "description": "客户更换伺服驱动器后跳故障码，机器人无法上电。远程更新伺服驱动固件解决。",
+    "sort_order": 0
+  },
+  {
+    "title": "江苏客户FANUC机器人翻新保养",
+    "industry": "机器人翻新",
+    "image": "/images/cases/case_1781249427300_dce779a0538df102682162fc0a45a873_1_.jpg",
+    "description": "多台FANUC搬运机器人，表面清洁补漆翻新，润滑脂及电池更换，系统升级加装profinet通讯板卡。",
+    "sort_order": 0
+  },
+  {
+    "title": "埃斯顿初、中级操作培训",
+    "industry": "机器人培训",
+    "image": "/images/cases/case_1781249520900______________20260612150146_1178_7.jpg",
+    "description": "参加埃斯顿原厂操作培训，为期一周，获得原厂操作工程师认证。",
+    "sort_order": 0
+  },
+  {
+    "title": "埃斯顿机器人维保工程师培训",
+    "industry": "机器人培训",
+    "image": "/images/cases/case_1781249662480______________20260612150150_1181_7.jpg",
+    "description": "理论学习+实操培训，学习埃斯顿机器人故障排查、维护保养、软件升级等知识，培养符合产业需求的机器人维保工程师。",
+    "sort_order": 0
+  },
+  {
+    "title": "各型号埃斯顿库存二手机销售",
+    "industry": "库存二手机",
+    "image": "/images/cases/case_1781249796592______________20260612143755_1169_7.jpg",
+    "description": "机型丰富，性价比高，提供原厂质保。适合产线机器人替换、系统升级改造。",
+    "sort_order": 0
+  },
+  {
+    "title": "江苏某汽车行业客户机器人保养",
+    "industry": "维护保养",
+    "image": "/images/cases/case_1781249931312_de170cad5401418d30aed0d9228e316a.jpg",
+    "description": "埃斯顿机器人保养服务，运行检测、更换润滑脂、编码器电池。",
+    "sort_order": 0
+  },
+  {
+    "title": "河北某饲料企业客户搬运机器人保养",
+    "industry": "维护保养",
+    "image": "/images/cases/case_1781250036563______________20260612143624.jpg",
+    "description": "埃斯顿四轴码垛机器人，更换原厂润滑脂、编码器电池，本机及控制柜清洁作业。",
+    "sort_order": 0
+  },
+  {
+    "title": "比亚迪客户机器人维保",
+    "industry": "维护保养",
+    "image": "/images/cases/case_1781250137608_c10bf07c55dafa48bec5ed874dd7cf39.jpg",
+    "description": "汽车产线埃斯顿机器人维保，静态及动态检测，排查故障隐患。更换润滑脂及编码器电池。",
+    "sort_order": 0
+  },
+  {
+    "title": "机器人更换驱动板",
+    "industry": "原厂备件",
+    "image": "/images/cases/case_1781250229629_a553fb10410122dd9ab0fe3a2daf0bd9.jpg",
+    "description": "远程支持锁定故障，提供原厂伺服驱动板备件，快速恢复生产。",
+    "sort_order": 0
+  },
+  {
+    "title": "机器人更换编码器电池",
+    "industry": "原厂备件",
+    "image": "/images/cases/case_1781250563399______________20260612145304_1171_7.jpg",
+    "description": "提供各型号机器人原厂编码器电池更换服务，欢迎来电咨询。",
+    "sort_order": 0
+  }
+]
