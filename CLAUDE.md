@@ -19,8 +19,9 @@ hszz_website/
 ├── index.html              # 页面入口（单页全部区块）
 ├── vite.config.js          # Vite 配置（含 dev 代理 /api → 3001）
 ├── tailwind.config.js      # 品牌色 / 字体 / 动画
-├── Dockerfile              # 多阶段构建
-├── docker-compose.yml      # 生产部署编排
+├── Dockerfile              # 多阶段构建（国内镜像源）
+├── docker-compose.yml      # 生产部署编排（端口映射 3002:3001）
+├── docker-pull.sh          # 国内镜像拉取兜底脚本
 ├── DEPLOY.md               # 零基础部署指南
 ├── start.sh                # 一键启动脚本
 ├── .env.example            # 环境变量模板
@@ -28,7 +29,7 @@ hszz_website/
 │   ├── logo/               #   企业 Logo
 │   ├── hero/               #   Hero 轮播图 (1920×1080)
 │   ├── services/           #   业务卡片图 (6:4)
-│   ├── cases/              #   案例封面图 (8:5)
+│   ├── cases/              #   案例封面图（18 张，纳入版本管理）
 │   └── qr/                 #   微信二维码 (1:1)
 ├── src/
 │   ├── style.css           # Tailwind 指令 + 全局组件样式
@@ -39,9 +40,10 @@ hszz_website/
 │       └── images.js       # 中心化图片配置
 └── server/
     ├── index.js            # Express 服务器（API + 静态托管）
-    ├── db.js               # SQLite 数据库（submissions + cases 表）
+    ├── db.js               # SQLite 数据库（submissions + cases 表 + 种子数据加载）
     ├── auth.js             # 简易 Bearer Token 鉴权
-    ├── admin.html          # 管理后台（客户管理 + 案例管理）
+    ├── admin.html          # 管理后台（客户管理 + 案例管理 + CSV 导出）
+    ├── cases-seed.json     # 18 条典型案例 JSON 种子数据
     └── uploads/            # 客户上传的诊断文件
 ```
 
@@ -80,8 +82,20 @@ cd server && node index.js   # 启动 API 服务器 (3001)
 ### 管理后台
 
 `/admin` 提供两个 Tab：
-- 📋 **客户管理** — 查看/筛选/处理诊断和联系表单提交
-- 📁 **案例管理** — 新增/编辑/删除案例（含图片上传）
+- 📋 **客户管理** — 查看/筛选/处理诊断和联系表单提交，支持 CSV 导出
+- 📁 **案例管理** — 新增/编辑/删除案例（含图片上传，≤10MB）
+
+### 种子数据
+
+18 条典型案例存储在 `server/cases-seed.json`（JSON 格式）。`db.js` 启动时检测 cases 表是否为空：
+- **空表**：自动从 JSON 导入种子数据
+- **有数据**：跳过，保留已有内容
+
+部署后新增案例如需固化，在 server 目录运行导出命令重新生成 `cases-seed.json`，提交即可。
+
+### Docker 国内构建
+
+Dockerfile 使用 `docker.1ms.run` 代理拉取基础镜像，Alpine 源切换为 `mirrors.aliyun.com`，npm 源切换为 `registry.npmmirror.com`。`docker-pull.sh` 提供额外兜底。
 
 ### 表单提交流
 
@@ -95,3 +109,6 @@ cd server && node index.js   # 启动 API 服务器 (3001)
 | 新增案例 | 管理后台 → 案例管理 → 新增 |
 | 修改文案 | 编辑 `index.html` 对应区块 |
 | 改管理密码 | 修改 `.env` 中 `ADMIN_PASSWORD`，重启 |
+| 导出客户数据 | 管理后台 → 筛选 → 导出 CSV |
+| 固化案例种子 | 运行导出命令刷新 `cases-seed.json`，git 提交 |
+| 更换端口 | 修改 `docker-compose.yml` 的 `ports` + Nginx `proxy_pass` |

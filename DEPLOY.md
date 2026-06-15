@@ -51,7 +51,12 @@ cd server && node index.js
 
 **Linux：**
 ```bash
+# 国外服务器
 curl -fsSL https://get.docker.com | sudo bash
+
+# 国内服务器（阿里云镜像）
+curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
+
 sudo usermod -aG docker $USER
 # 注销重新登录
 ```
@@ -68,13 +73,26 @@ cp .env.example .env
 nano .env    # 把 ADMIN_PASSWORD 改成你自己的强密码
 ```
 
-### 3. 启动
+### 3. （国内服务器）预拉取基础镜像
 
 ```bash
-docker compose up -d
+bash docker-pull.sh
 ```
 
-第一次需要下载和构建（2-5 分钟）。出现 `Started` 即可访问 http://localhost:3001。
+该脚本依次尝试 4 个国内镜像代理拉取 `node:22-alpine`，有一个成功即可。
+
+### 4. 启动
+
+```bash
+docker compose up -d --build
+```
+
+第一次需要下载和构建（3-5 分钟）。出现 `Started` 即可访问：
+
+- 官网：http://localhost:3002
+- 管理后台：http://localhost:3002/admin
+
+> 端口说明：容器内部运行在 3001，宿主机映射到 **3002**（避免端口冲突）。如需修改，编辑 `docker-compose.yml` 中的 `ports: "3002:3001"`。
 
 ### 常用命令速查
 
@@ -99,14 +117,17 @@ docker compose up -d
 ### 步骤总览
 
 ```
-用户 → 域名(DNS) → 服务器 Nginx:80 → Docker容器:3001
+用户 → 域名(DNS) → 服务器 Nginx:80/443 → Docker容器:3001（宿主机映射 3002）
 ```
 
 ### 1. 登录服务器，安装 Docker
 
 ```bash
 ssh root@你的服务器IP
-curl -fsSL https://get.docker.com | sudo bash
+
+# 国内服务器用阿里云镜像
+curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
+systemctl enable docker --now
 ```
 
 ### 2. 上传项目
@@ -114,8 +135,15 @@ curl -fsSL https://get.docker.com | sudo bash
 在**本地电脑**上：
 
 ```bash
-# 打包项目
-tar czf hszz.tar.gz --exclude=node_modules --exclude=dist --exclude=.git .
+# 打包项目（排除不需要的文件）
+tar czf hszz.tar.gz \
+  --exclude=node_modules \
+  --exclude=dist \
+  --exclude=.git \
+  --exclude=server/node_modules \
+  --exclude=server/data.db* \
+  --exclude=hszz.tar.gz \
+  .
 
 # 上传到服务器
 scp hszz.tar.gz root@你的服务器IP:/opt/
@@ -125,6 +153,7 @@ scp hszz.tar.gz root@你的服务器IP:/opt/
 
 ```bash
 cd /opt
+mkdir -p hszz_website
 tar xzf hszz.tar.gz -C hszz_website
 cd hszz_website
 ```
@@ -132,9 +161,12 @@ cd hszz_website
 ### 3. 配置并启动
 
 ```bash
+# 国内服务器：先拉取基础镜像
+bash docker-pull.sh
+
 cp .env.example .env
 nano .env        # 修改密码
-docker compose up -d
+docker compose up -d --build
 ```
 
 ### 4. 安装 Nginx 并配置域名反代
@@ -149,14 +181,14 @@ sudo apt update && sudo apt install nginx -y
 sudo nano /etc/nginx/sites-available/hszz
 ```
 
-```
+```nginx
 server {
     listen 80;
     server_name www.your-company.com your-company.com;
     client_max_body_size 50m;
 
     location / {
-        proxy_pass http://127.0.0.1:3001;
+        proxy_pass http://127.0.0.1:3002;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -164,6 +196,8 @@ server {
     }
 }
 ```
+
+> 注意：这里 `proxy_pass` 填 **3002**（宿主机映射端口），而非容器的 3001。
 
 启用：
 
@@ -179,6 +213,20 @@ sudo apt install certbot python3-certbot-nginx -y
 sudo certbot --nginx -d your-company.com -d www.your-company.com
 ```
 
+### 6. 防火墙放行
+
+```bash
+# 仅开放对外端口
+firewall-cmd --add-service=http --permanent
+firewall-cmd --add-service=https --permanent
+firewall-cmd --reload
+
+# 如果使用 ufw
+ufw allow 80/tcp && ufw allow 443/tcp
+```
+
+> 容器端口 3002 不需要对外开放 — Nginx 通过 localhost 访问即可。
+
 ---
 
 ## 日常维护
@@ -187,16 +235,45 @@ sudo certbot --nginx -d your-company.com -d www.your-company.com
 
 浏览器打开 `http://你的域名/admin` → 登录 → 查看/筛选/处理。
 
+支持按类型、品牌、故障、状态筛选，支持将结果导出为 CSV。
+
+### 管理案例
+
+管理后台 → 案例管理 Tab → 新增/编辑/删除案例。支持图片上传（≤10MB），上传的图片自动保存到 `public/images/cases/`。
+
 ### 数据备份
 
 ```bash
+# 备份数据库（含所有客户提交和案例）
 cp server/data.db ~/backup/data_$(date +%Y%m%d).db
+
+# 备份客户上传文件
 cp -r server/uploads ~/backup/uploads_$(date +%Y%m%d)
+
+# 备份案例图片（如有新增）
+tar czf ~/backup/case_images_$(date +%Y%m%d).tar.gz public/images/cases/
+```
+
+### 更新案例种子数据
+
+在管理后台新增/修改案例后，建议同步更新种子文件，确保下次全新部署时数据完整：
+
+```bash
+cd server && node -e "
+const Database = require('better-sqlite3');
+const fs = require('fs');
+const db = new Database('data.db', { readonly: true });
+const cases = db.prepare('SELECT title, industry, image, description, sort_order FROM cases ORDER BY id').all();
+db.close();
+fs.writeFileSync('cases-seed.json', JSON.stringify(cases, null, 2));
+console.log('已更新种子数据：' + cases.length + ' 条案例');
+"
+# 然后 git commit + git push
 ```
 
 ### 更换图片
 
-1. 把新图片放入 `public/images/`
+1. 把新图片放入 `public/images/` 对应目录
 2. 编辑 `src/data/images.js`，改对应路径
 3. `docker compose down && docker compose up -d --build`
 
@@ -211,10 +288,14 @@ docker compose down && docker compose up -d --build
 
 ## 常见问题
 
-**Q: 端口被占用？** 改 `.env` 中 `PORT=3002`，重启。
+**Q: 端口被占用？** 修改 `docker-compose.yml` 中 `ports` 左侧端口号（如 `"3003:3001"`），然后 `docker compose up -d`。注意同步更新 Nginx 配置中的 `proxy_pass` 端口。
 
-**Q: 忘记密码？** `grep ADMIN_PASSWORD .env` 查看。
+**Q: 国内构建失败？** 先运行 `bash docker-pull.sh` 拉取基础镜像，再执行 `docker compose up -d --build`。Dockerfile 已配置阿里云 Alpine 源和 npmmirror npm 源。
 
-**Q: 重置数据？** `docker compose down && rm server/data.db* && docker compose up -d`
+**Q: 忘记密码？** `grep ADMIN_PASSWORD .env` 查看明文密码。
 
-**Q: 服务器重启后网站会恢复吗？** 会。`restart: unless-stopped` 自动重启。
+**Q: 重置数据？** `docker compose down && rm server/data.db* && docker compose up -d`。重启后数据库重建，种子数据自动导入。
+
+**Q: 种子数据未加载？** 检查 `server/cases-seed.json` 文件是否存在。种子仅在 cases 表为空时导入（即首次部署或重置后）。
+
+**Q: 服务器重启后网站会恢复吗？** 会。`restart: unless-stopped` 确保容器自动重启。
